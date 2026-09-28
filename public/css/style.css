@@ -1165,6 +1165,11 @@ button.nav-icon-link {
     border-top: 0;
 }
 
+.article-layout--no-toc {
+    grid-template-columns: minmax(0, 760px);
+    justify-content: center;
+}
+
 .article-shell {
     min-width: 0;
 }
@@ -1252,6 +1257,15 @@ button.nav-icon-link {
     color: var(--ink);
     font-size: 1.04rem;
     line-height: 1.82;
+}
+
+.article-prose img {
+    width: auto;
+    height: auto;
+    max-width: min(100%, 760px);
+    max-height: 72vh;
+    margin: 1.75rem auto;
+    object-fit: contain;
 }
 
 .article-prose > *:first-child { margin-top: 0; }
