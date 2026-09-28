@@ -1,7 +1,7 @@
 ---
 title: "Jane Street Cards V4 Writeup"
-description: "My solve for the Jane Street Cards V4 puzzle."
-date: 2026-09-28
+description: "My solve for the Jane Street Cards V4 puzzle. Credits to Maegan for this was a joint venture."
+date: 2026-06-28
 tags:
   - Puzzle
 draft: false
