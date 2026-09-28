@@ -10,11 +10,11 @@ draft: false
 
 First thing that caught my eye is some sort of greenish hue on the statue itself. It seems to suggest that the statue is not stone/copper, but wood. Doing some googling led me to conclude that it is a wooden statue, a specialty of Poland.
 
-![image of plaque](./imgs/bellingcat78_0.png)
+![image of plaque](./plaque.png)
 
 The plaque on the statue as well as the decorations suggest that it is of the King. The wording also fits the Casimir III: Kazimierz III Wielki. This is where I thought I could simply search for the King’s statue and find the location but the statue is not famous enough for that. 
 
-![image of Casimir III](./imgs/bellingcat78_1.png)
+![image of Casimir III](./casimir-iii.png)
 
 - other details that confirms it is indeed him is the religious symbols, the circular orb he holds.
 
@@ -25,7 +25,7 @@ Looking in greater detail, we can determine the exact voivodeship (Polish provin
 - [Wikipedia reference](https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Poland#:~:text=Polish) voivodeship license plate codes. First letter indicates the voivodeship.
 - Begins with an N narrows it down by a lot!
 
-![image of carplate](./imgs/bellingcat78_2.png)
+![image of carplate](./license-plate.png)
 
 Oh hey it is a coastal area near Gdansk! I found this gem of a resource that further narrows our options down by A LOT:
 
@@ -42,6 +42,6 @@ As a tourist, it is likely that the picture is taken downtown, and very likely n
 
 Instead of browsing through the google reviews, I zoomed out the map to find car parks then dropped the google streetview pin and eventually found the location.
 
-![image of Elk google maps](./imgs/bellingcat78_3.png)
+![image of Elk google maps](./elk-map.png)
 
 Source: [Bellingcat Challenge 78](https://challenge.bellingcat.com/challenge/78/)
