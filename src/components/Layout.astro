@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import { DEFAULT_PALETTE } from '../lib/palette';
+import '../styles/style.css';
 
 interface Props {
   title: string;
@@ -64,7 +65,6 @@ const currentPath = Astro.url.pathname;
         document.addEventListener('astro:after-swap', apply);
       })();
     </script>
-    <link rel="stylesheet" href="/css/style.css" />
     <ClientRouter />
   </head>
   <body>

@@ -43,7 +43,7 @@ export default defineConfig({
   compressHTML: true,
   markdown: {
     // Emit --astro-code-* variables instead of fixed hex colors, so code
-    // blocks follow the active palette (defined in public/css/style.css).
+    // blocks follow the active palette (defined in src/styles/style.css).
     shikiConfig: { theme: 'css-variables' },
   },
   integrations: [sitemap(), pagefindDev()],

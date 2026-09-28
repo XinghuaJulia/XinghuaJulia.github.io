@@ -7,7 +7,7 @@
  * `site-palette` in localStorage and takes precedence until they clear it.
  *
  * Both values must name a `[data-palette="..."]` block in
- * public/css/style.css. A name with no matching block is not an error --
+ * src/styles/style.css. A name with no matching block is not an error --
  * the page just falls back to the bare `:root` variables -- so change these
  * together with the CSS.
  *
