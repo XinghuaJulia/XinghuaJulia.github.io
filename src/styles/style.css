@@ -1309,6 +1309,30 @@ button.nav-icon-link {
 
 .article-prose li + li { margin-top: 0.42rem; }
 
+.article-prose table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    margin: 1.45rem 0;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.article-prose th,
+.article-prose td {
+    border: 1px solid var(--line);
+    padding: 0.55rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.article-prose th {
+    background: color-mix(in srgb, var(--bg-elevated) 72%, transparent);
+    color: var(--ink);
+}
+
 .article-prose blockquote {
     margin: 1.2rem 0;
     border-left: 2px solid color-mix(in srgb, var(--accent) 72%, var(--line));
