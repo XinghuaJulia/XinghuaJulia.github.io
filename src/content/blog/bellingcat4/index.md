@@ -1,6 +1,6 @@
 ---
 title: "Bellingcat - Challenge 4"
-description: "My solve on Bellingcat's geolocation challenge 4."
+description: "This is the advent of squinting at car plates..."
 date: 2026-09-15
 tags:
   - OSINT

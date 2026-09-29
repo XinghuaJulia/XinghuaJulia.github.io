@@ -1,6 +1,6 @@
 ---
 title: "Jane Street Cards V5 Writeup"
-description: "My solve for the Jane Street Cards V5 puzzle."
+description: "My solve for the Jane Street Cards V5 puzzle. Would just say, solving challenges while feeling feverish is a whole nother challenge."
 date: 2026-08-29
 tags:
   - Puzzle

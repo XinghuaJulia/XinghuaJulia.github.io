@@ -1,6 +1,6 @@
 ---
 title: "Bellingcat - Challenge 78"
-description: "My solve on the background check series by GeoPeter."
+description: "Olden kings from olden days, who will perish and who will stay. Challenge by Geopeter, from his Background Check series."
 date: 2026-09-27
 tags:
   - OSINT
@@ -43,5 +43,7 @@ As a tourist, it is likely that the picture is taken downtown, and very likely n
 Instead of browsing through the google reviews, I zoomed out the map to find car parks then dropped the google streetview pin and eventually found the location.
 
 ![image of Elk google maps](./elk-map.png)
+
+We have solved the challenge and obtained the street name (which I realise is the same throughout the whole stretch of river anyways, but yes): **Nadjeziorna**
 
 Source: [Bellingcat Challenge 78](https://challenge.bellingcat.com/challenge/78/)

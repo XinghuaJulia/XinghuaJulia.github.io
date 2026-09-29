@@ -36,9 +36,9 @@ Eventually, found a full report detailing the proper format: [NOAA observing han
 - The field of interest is this: `10280` , 6 entries before `22252`
 - The starting 1 matches the 1SnTTT format. There ar a lot of other TTT with various subscripts (including dew points and wtv) but I intuition tells me it is the most straight forward answer.
 
-Filling in the blanks, TTT = 280 = 28.0 Celcius
+Filling in the blanks, TTT = 280 = **28.0 Celcius**
 
-My intuition helped me here, I mean, TTT is likely 1 dp cause temps can’t go beyond 2 digits (else u r roast or an ice lolipop.) However, here is the diagram to help you:
+My intuition helped me here, I mean, TTT is likely 1 dp cause temps can’t go beyond 2 digits (else you will be roast or an ice lolipop.) However, here is the diagram to help you:
 
 ![Examples showing how air temperatures are encoded](./temperature-code-examples.png)
 
