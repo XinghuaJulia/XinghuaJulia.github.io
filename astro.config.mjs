@@ -46,5 +46,9 @@ export default defineConfig({
     // blocks follow the active palette (defined in src/styles/style.css).
     shikiConfig: { theme: 'css-variables' },
   },
-  integrations: [sitemap(), pagefindDev()],
+  integrations: [
+    // /feeshy is intentionally discoverable through robots.txt, not sitemap.
+    sitemap({ filter: (page) => !page.endsWith('/feeshy/') }),
+    pagefindDev(),
+  ],
 });

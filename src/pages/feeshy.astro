@@ -1,0 +1,559 @@
+---
+// Intentionally standalone: the secret page should not inherit the polished
+// site chrome or palette. Its bad-HTML look is part of the challenge.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#ff00cc" />
+    <title>FEESHY ZONE!!!</title>
+    <style is:global>
+      :root {
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        color: #000080;
+        background: #00ffff;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { min-width: 320px; min-height: 100%; }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background:
+          radial-gradient(circle at 10% 20%, #fff 0 2px, transparent 3px),
+          radial-gradient(circle at 80% 60%, #fff 0 1px, transparent 2px),
+          repeating-linear-gradient(
+            125deg,
+            #ff003c 0 70px,
+            #ff8a00 70px 140px,
+            #fff200 140px 210px,
+            #35e000 210px 280px,
+            #00c8ff 280px 350px,
+            #5b35ff 350px 420px,
+            #e900ff 420px 490px
+          );
+        background-size: 140px 140px, 190px 190px, 980px 980px;
+        animation: rainbow-scroll 18s linear infinite;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        z-index: 0;
+        inset: 0;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      a { color: #0000ee; text-decoration: underline; }
+      a:visited { color: #551a8b; }
+      button, input { font: inherit; }
+
+      #fireworks,
+      #card-rain {
+        position: fixed;
+        z-index: 20;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      #card-rain { overflow: hidden; }
+
+      .falling-card {
+        position: absolute;
+        top: -110px;
+        width: 58px;
+        height: 78px;
+        display: grid;
+        place-items: center;
+        border: 3px outset #fff;
+        border-radius: 5px;
+        background: #fff;
+        color: #111;
+        font: 700 22px Georgia, serif;
+        box-shadow: 5px 7px 0 rgba(0, 0, 0, 0.34);
+        animation: card-fall var(--duration) linear var(--delay) infinite;
+      }
+
+      .falling-card.red { color: #d40000; }
+      .falling-card.back {
+        color: #fff;
+        background:
+          repeating-linear-gradient(45deg, #001c99 0 5px, #fff 5px 7px, #d60000 7px 12px);
+        text-shadow: 1px 1px #000;
+      }
+
+      .page-wrap {
+        position: relative;
+        z-index: 2;
+        width: min(1000px, calc(100% - 18px));
+        margin: 10px auto 42px;
+        border: 8px ridge #ffff00;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23000066'/%3E%3Cpath d='M20 2l3.5 10.8H35l-9.3 6.7 3.6 10.8L20 23.6l-9.3 6.7 3.6-10.8L5 12.8h11.5z' fill='%23ffff00' opacity='.18'/%3E%3C/svg%3E");
+        box-shadow: 10px 10px 0 #000;
+      }
+
+      .ticker {
+        padding: 5px;
+        border-bottom: 5px groove #fff;
+        background: #000;
+        color: #00ff00;
+        font: 700 16px "Courier New", monospace;
+      }
+
+      .site-title {
+        margin: 0;
+        padding: 18px 10px 8px;
+        text-align: center;
+        color: #ffff00;
+        font-size: clamp(2rem, 8vw, 5.6rem);
+        line-height: 0.88;
+        letter-spacing: -0.08em;
+        text-shadow: 3px 3px #ff00ff, 6px 6px #00ffff, 9px 9px #000;
+        transform: rotate(-1deg);
+      }
+
+      .subtitle {
+        margin: 16px auto 20px;
+        width: fit-content;
+        max-width: 90%;
+        padding: 4px 12px;
+        border: 4px double #fff;
+        background: #ff00ff;
+        color: #fff;
+        font-size: clamp(0.9rem, 3vw, 1.45rem);
+        text-align: center;
+        animation: blink 0.72s steps(1) infinite;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 165px minmax(0, 1fr) 165px;
+        gap: 8px;
+        padding: 8px;
+      }
+
+      .sidebar,
+      .main-panel {
+        border: 5px ridge #c0c0c0;
+        background: #c0c0c0;
+        box-shadow: inset 2px 2px #fff, inset -2px -2px #404040;
+      }
+
+      .sidebar { padding: 7px; font-size: 0.82rem; }
+
+      .side-title {
+        margin: -2px -2px 8px;
+        padding: 3px;
+        background: linear-gradient(90deg, #000080, #1084d0);
+        color: #fff;
+        font: 700 0.8rem Arial, sans-serif;
+      }
+
+      .sidebar ul { margin: 0 0 16px; padding-left: 20px; }
+      .sidebar li { margin: 6px 0; }
+
+      .construction {
+        display: block;
+        margin: 10px auto;
+        padding: 4px;
+        border: 2px dashed #000;
+        background: #ffff00;
+        color: #000;
+        text-align: center;
+        font-weight: 700;
+        transform: rotate(2deg);
+      }
+
+      .main-panel { min-width: 0; padding: 10px; }
+
+      .window {
+        border: 3px outset #eee;
+        background: #c0c0c0;
+      }
+
+      .window-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 3px 4px;
+        background: linear-gradient(90deg, #000080, #1084d0);
+        color: #fff;
+        font: 700 0.82rem Arial, sans-serif;
+      }
+
+      .window-controls { letter-spacing: 2px; color: #000; }
+
+      .window-body {
+        padding: clamp(14px, 4vw, 28px);
+        border: 2px inset #fff;
+        background: #fff;
+        text-align: center;
+      }
+
+      .window-body h2 {
+        margin: 0 0 8px;
+        color: #ff0080;
+        font-size: clamp(1.7rem, 6vw, 3.5rem);
+        text-shadow: 2px 2px #00ffff;
+      }
+
+      .trophy { font-size: clamp(3rem, 10vw, 6rem); line-height: 1; }
+
+      .clue-box {
+        margin: 18px auto;
+        padding: 12px;
+        border: 5px double #ff00ff;
+        background: #ffffcc;
+        color: #330033;
+        text-align: left;
+        font-family: "Times New Roman", serif;
+        font-size: 1.05rem;
+      }
+
+      .clue-box strong { color: #d00000; }
+
+      .flag-form {
+        margin: 20px auto 6px;
+        padding: 14px;
+        border: 4px outset #ddd;
+        background: #c0c0c0;
+        color: #000;
+      }
+
+      .flag-form label {
+        display: block;
+        margin-bottom: 8px;
+        font: 700 1rem Arial, sans-serif;
+      }
+
+      .flag-row {
+        display: flex;
+        gap: 6px;
+      }
+
+      .flag-row input {
+        min-width: 0;
+        flex: 1;
+        padding: 9px;
+        border: 3px inset #fff;
+        background: #fff;
+        color: #000;
+        font: 700 0.95rem "Courier New", monospace;
+      }
+
+      .flag-row button {
+        padding: 7px 12px;
+        border: 4px outset #fff;
+        background: #c0c0c0;
+        color: #000;
+        font: 700 0.9rem Arial, sans-serif;
+        cursor: pointer;
+      }
+
+      .flag-row button:active { border-style: inset; }
+
+      #flag-result {
+        min-height: 2em;
+        margin: 10px 0 0;
+        padding: 5px;
+        font: 700 1rem "Courier New", monospace;
+      }
+
+      #flag-result.success {
+        border: 3px dashed #008000;
+        background: #00ff00;
+        color: #001d00;
+        animation: blink 0.5s steps(1) 6;
+      }
+
+      #flag-result.error { color: #b00000; }
+
+      .counter {
+        display: block;
+        margin: 8px auto 14px;
+        width: fit-content;
+        padding: 3px 6px;
+        border: 3px inset #888;
+        background: #000;
+        color: #00ff00;
+        font: 700 1.1rem "Courier New", monospace;
+        letter-spacing: 0.14em;
+      }
+
+      .fake-ad {
+        margin: 10px 0;
+        padding: 8px 4px;
+        border: 3px outset #fff;
+        background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+        color: #000;
+        text-align: center;
+        font-weight: 700;
+        animation: ad-wobble 1.3s ease-in-out infinite alternate;
+      }
+
+      .footer {
+        padding: 14px 8px;
+        border-top: 5px groove #fff;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        font: 13px "Times New Roman", serif;
+      }
+
+      .footer p { margin: 4px; }
+      .tiny { font-size: 0.72rem; }
+
+      .victory .page-wrap {
+        animation: victory-pulse 0.9s steps(2) infinite;
+      }
+
+      @keyframes rainbow-scroll { to { background-position: 140px 140px, -190px 190px, 980px 0; } }
+      @keyframes blink { 50% { opacity: 0.18; } }
+      @keyframes ad-wobble { to { transform: rotate(2deg) scale(1.03); } }
+      @keyframes victory-pulse { 50% { filter: hue-rotate(120deg) saturate(1.6); } }
+      @keyframes card-fall {
+        0% { transform: translate3d(0, -120px, 0) rotate(0deg); }
+        45% { transform: translate3d(var(--drift), 48vh, 0) rotate(380deg); }
+        100% { transform: translate3d(calc(var(--drift) * -0.35), 115vh, 0) rotate(760deg); }
+      }
+
+      @media (max-width: 760px) {
+        .content-grid { grid-template-columns: 1fr; }
+        .sidebar { display: none; }
+        .page-wrap { width: calc(100% - 8px); margin-top: 4px; border-width: 5px; }
+        .flag-row { flex-direction: column; }
+        .flag-row button { min-height: 44px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; }
+        #fireworks, #card-rain { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="fireworks" aria-hidden="true"></canvas>
+    <div id="card-rain" aria-hidden="true"></div>
+
+    <div class="page-wrap">
+      <div class="ticker">
+        <marquee scrollamount="8">★彡 WELCOME, INTERNET EXPLORER!!! YOU FOUND THE SECRET FISH ZONE 彡★ &nbsp;  &nbsp; NO PHISHING ALLOWED &nbsp; </marquee>
+      </div>
+
+      <header>
+        <h1 class="site-title">FEESHY ZONE</h1>
+        <p class="subtitle">CONGRATULATIONS... ???</p>
+      </header>
+
+      <div class="content-grid">
+        <aside class="sidebar" aria-label="Totally useful navigation">
+          <div class="side-title">FreeRAM.exe</div>
+          <ul>
+            <li><a href="/">HOME PAGE</a></li>
+            <li><a href="#flag-station">FLAG STATION</a></li>
+            <li><a href="/robots.txt">ROBOTS!!!</a></li>
+            <li><a href="mailto:xiner.lin.julia@gmail.com">WEBMASTER</a></li>
+          </ul>
+          <span class="construction">🚧 UNDER<br />CONSTRUCTION 🚧</span>
+          <p><strong>Last updated:</strong><br />30/09/2003</p>
+          <p class="tiny">This page contains 100% organic HTML and at least three tables in spirit.</p>
+        </aside>
+
+        <main class="main-panel">
+          <section class="window">
+            <div class="window-title">
+              <span>Bread_Solitaire.exe</span>
+              <span class="window-controls">_ □ ×</span>
+            </div>
+            <div class="window-body">
+              <img src="/src/pages/meowbread.jpeg" alt="meow bread pic here">
+              <h2>but before you get dat bread...</h2>
+
+              <div class="clue-box">
+
+                <strong>TOP SECRET MISSION:</strong> The owner took the photograph on a holiday trip. Where did they take the picture? Which camera did they use?
+              
+                <div style="margin-top:8px; text-align:center; font-family:'Courier New',monospace; font-weight:bold;">meow&#123;nameofstreet_cameramodel&#125;meow</div>
+              </div>
+
+              <form class="flag-form" id="flag-station" novalidate>
+                <label for="flag-input">ENTER UR FLAG HERE:</label>
+                <div class="flag-row">
+                  <input id="flag-input" name="flag" type="text" autocomplete="off" spellcheck="false" placeholder="meow&#123;amoystreet_h6d400c&#125;meow" required />
+                  <button type="submit">CHECK IT!!!</button>
+                </div>
+                <p id="flag-result" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+          </section>
+        </main>
+
+        <aside class="sidebar" aria-label="Webmaster information">
+          <div class="side-title">Cool Stuff!!!</div>
+          <p style="text-align:center"><strong>YOU ARE VISITOR:</strong></p>
+          <span class="counter">000042</span>
+          <div class="fake-ad">🔥 CLICK HERE TO WIN A FREE FISH 🔥</div>
+          <p style="text-align:center; font-size:2rem; margin:12px 0">🐟<br />💿<br />🕷️</p>
+          <p><strong>Best viewed with:</strong></p>
+          <ul>
+            <li>Internet Explorer 6</li>
+            <li>800 × 600 pixels</li>
+            <li>56k modem</li>
+          </ul>
+        </aside>
+      </div>
+
+      <footer class="footer">
+        <p>© 1998–2003 MEOWBREAD WEB RING • ALL YOUR FEESH ARE BELONG TO US</p>
+        <p class="tiny">Made with BadHTML, determination, minimal hopes and dreams.</p>
+      </footer>
+    </div>
+
+    <script>
+      const EXPECTED_FLAG_SHA256 = '483f262040fd9fdfda9878aa042c85f92255d5097219893dd3ca791702f246b0';
+      // heh good luck cracking this :>
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      async function sha256(value) {
+        const bytes = new TextEncoder().encode(value);
+        const digest = await crypto.subtle.digest('SHA-256', bytes);
+        return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+      }
+
+      const form = document.getElementById('flag-station');
+      const input = document.getElementById('flag-input');
+      const result = document.getElementById('flag-result');
+      const wrongAnswers = [
+        'NOPE!!! The fish remains suspicious.',
+        'WRONG FLAG :( Try asking the photograph what it remembers.',
+        'ACCESS DENIED by Windows Fish Defender 2003.',
+        '404: Correct answer not found!!!',
+      ];
+
+      form?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!(input instanceof HTMLInputElement) || !result) return;
+
+        const candidate = input.value.trim().toLowerCase();
+        if (!candidate) {
+          result.className = 'error';
+          result.textContent = 'TYPE SOMETHING FIRST, WEB SURFER!!!';
+          return;
+        }
+
+        const correct = (await sha256(candidate)) === EXPECTED_FLAG_SHA256;
+        if (correct) {
+          result.className = 'success';
+          result.textContent = '✓ CORRECT!!! YOU ARE A CERTIFIED METADATA FISHER!!!';
+          document.body.classList.add('victory');
+          if (!prefersReducedMotion) celebrate();
+        } else {
+          result.className = 'error';
+          result.textContent = wrongAnswers[Math.floor(Math.random() * wrongAnswers.length)];
+          input.select();
+        }
+      });
+
+      const suits = ['♠', '♥', '♦', '♣'];
+      const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+      const cardRain = document.getElementById('card-rain');
+
+      function addCard(index, intense = false) {
+        if (!cardRain) return;
+        const card = document.createElement('span');
+        const suit = suits[index % suits.length];
+        card.className = `falling-card ${suit === '♥' || suit === '♦' ? 'red' : ''} ${index % 7 === 0 ? 'back' : ''}`;
+        card.textContent = index % 7 === 0 ? '★' : `${ranks[index % ranks.length]}${suit}`;
+        card.style.left = `${Math.random() * 94}%`;
+        card.style.setProperty('--drift', `${-130 + Math.random() * 260}px`);
+        card.style.setProperty('--duration', `${intense ? 2.8 + Math.random() * 2 : 7 + Math.random() * 7}s`);
+        card.style.setProperty('--delay', `${intense ? Math.random() * -2 : Math.random() * -12}s`);
+        cardRain.append(card);
+        if (intense) window.setTimeout(() => card.remove(), 6000);
+      }
+
+      if (!prefersReducedMotion) {
+        for (let index = 0; index < 12; index += 1) addCard(index);
+      }
+
+      const canvas = document.getElementById('fireworks');
+      const context = canvas instanceof HTMLCanvasElement ? canvas.getContext('2d') : null;
+      let particles = [];
+      let lastBurst = 0;
+      let frenzyUntil = 0;
+
+      function resizeCanvas() {
+        if (!(canvas instanceof HTMLCanvasElement) || !context) return;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(window.innerWidth * ratio);
+        canvas.height = Math.floor(window.innerHeight * ratio);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function burst(x, y, count = 40) {
+        const hue = Math.floor(Math.random() * 360);
+        for (let index = 0; index < count; index += 1) {
+          const angle = (Math.PI * 2 * index) / count + Math.random() * 0.18;
+          const speed = 1.5 + Math.random() * 4.5;
+          particles.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: 65 + Math.random() * 30,
+            hue: hue + Math.random() * 45,
+          });
+        }
+      }
+
+      function animateFireworks(time) {
+        if (!context || prefersReducedMotion) return;
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        const interval = time < frenzyUntil ? 170 : 1050;
+        if (time - lastBurst > interval) {
+          burst(
+            window.innerWidth * (0.15 + Math.random() * 0.7),
+            window.innerHeight * (0.12 + Math.random() * 0.45),
+            time < frenzyUntil ? 62 : 32,
+          );
+          lastBurst = time;
+        }
+
+        particles = particles.filter((particle) => particle.life > 0);
+        for (const particle of particles) {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          particle.vy += 0.045;
+          particle.vx *= 0.992;
+          particle.life -= 1;
+          context.beginPath();
+          context.arc(particle.x, particle.y, 1.8, 0, Math.PI * 2);
+          context.fillStyle = `hsla(${particle.hue}, 100%, 62%, ${Math.min(1, particle.life / 30)})`;
+          context.fill();
+        }
+        requestAnimationFrame(animateFireworks);
+      }
+
+      function celebrate() {
+        frenzyUntil = performance.now() + 9000;
+        for (let index = 0; index < 52; index += 1) addCard(index, true);
+      }
+
+      if (!prefersReducedMotion && canvas instanceof HTMLCanvasElement) {
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+        requestAnimationFrame(animateFireworks);
+      }
+    </script>
+  </body>
+</html>
