@@ -908,6 +908,76 @@ button.nav-icon-link {
     padding-bottom: 5rem;
 }
 
+/* Homepage-only photographic landing surface. The image remains decorative;
+   the layered veil supplies consistent contrast across bright and dark areas. */
+.home-landing {
+    --ink: #ffffff;
+    --ink-soft: rgba(255, 255, 255, 0.9);
+    --muted: rgba(255, 255, 255, 0.74);
+    --muted-2: rgba(255, 255, 255, 0.58);
+    --line: rgba(255, 255, 255, 0.2);
+    --line-strong: rgba(255, 255, 255, 0.5);
+    --accent: #a9d2ff;
+    --accent-soft: rgba(169, 210, 255, 0.16);
+    --bg: #111214;
+    position: relative;
+    isolation: isolate;
+    min-height: calc(100svh - 4.25rem);
+    overflow: hidden;
+    color: var(--ink);
+}
+
+.home-background {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    overflow: hidden;
+    background: #171311;
+}
+
+.home-background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(8, 8, 9, 0.7) 0%, rgba(8, 8, 9, 0.56) 52%, rgba(8, 8, 9, 0.5) 100%),
+        linear-gradient(180deg, rgba(8, 8, 9, 0.24) 0%, rgba(8, 8, 9, 0.5) 100%);
+}
+
+.home-background img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center 48%;
+}
+
+.home-landing-content {
+    position: relative;
+    z-index: 1;
+}
+
+.home-landing .page-hero {
+    padding-top: clamp(5rem, 12vh, 9rem);
+    padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.home-landing .page-hero .hero-lede,
+.home-landing .commit-tree-date,
+.home-landing .skills-item,
+.home-landing .empty-note {
+    color: var(--muted);
+}
+
+.home-landing .section {
+    padding-top: clamp(3rem, 7vh, 5rem);
+    padding-bottom: clamp(3rem, 7vh, 5rem);
+}
+
+.home-landing .commit-tree a::before {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.16);
+}
+
 .page-hero {
     max-width: var(--max);
     margin: 0 auto;
@@ -1632,6 +1702,31 @@ button.nav-icon-link {
 
     .content-shell {
         padding-bottom: 3rem;
+    }
+
+    .home-landing {
+        min-height: calc(100svh - 7.5rem);
+        padding-bottom: 2rem;
+    }
+
+    .home-landing .page-hero {
+        padding-top: 4.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .home-landing .section {
+        padding-top: 2.75rem;
+        padding-bottom: 2.75rem;
+    }
+
+    .home-background img {
+        object-position: 54% center;
+    }
+
+    .home-background::after {
+        background:
+            linear-gradient(90deg, rgba(8, 8, 9, 0.68), rgba(8, 8, 9, 0.58)),
+            linear-gradient(180deg, rgba(8, 8, 9, 0.28), rgba(8, 8, 9, 0.56));
     }
 
     .article-layout {

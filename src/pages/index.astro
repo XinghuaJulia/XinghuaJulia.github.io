@@ -30,29 +30,44 @@ const personSchema = JSON.stringify({
   canonicalPath="/"
 >
   <script type="application/ld+json" is:inline set:html={personSchema} />
-  <main class="content-shell">
-    <div class="page-hero">
-      <h1 class="visually-hidden">Home</h1>
-      <TypedLede text="Bienvenue Sur Mon Blogue." />
+  <main class="content-shell home-landing">
+    <div class="home-background" aria-hidden="true">
+      <img
+        src="/assets/challenge.jpg"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
     </div>
 
-    <section class="section" aria-label="Recent posts">
-      {posts.length === 0 ? (
-        <p class="empty-note">No posts yet, check back soon.</p>
-      ) : (
-        <nav class="commit-tree" aria-label="Recent posts">
-          <a class="commit-tree-head" href="/blog/" title="All posts">Blog</a>
-          {posts.map((post) => (
-            <a href={`/blog/${postSlug(post)}/`}>
-              {post.data.title}
-              <span class="commit-tree-date">{formatPostDate(post.data.date)}</span>
-            </a>
-          ))}
-          <a href="/about/">About</a>
-        </nav>
-      )}
-    </section>
+    <div class="home-landing-content">
+      <div class="page-hero">
+        <h1 class="visually-hidden">Home</h1>
+        <TypedLede text="Psst. I have a challenge for you." />
+        <!-- Where did I take this picture? What camera did I use? -->
+        <!-- Flag format: meow{nameofstreet_cameramodelnumber} -->
+        <!-- (e.g): meow{amoystreet_h6d400c} -->
+      </div>
 
-    <SkillsMarquee />
+      <section class="section" aria-label="Recent posts">
+        {posts.length === 0 ? (
+          <p class="empty-note">No posts yet, check back soon :3</p>
+        ) : (
+          <nav class="commit-tree" aria-label="Recent posts">
+            <a class="commit-tree-head" href="/blog/" title="All posts">Blog</a>
+            {posts.map((post) => (
+              <a href={`/blog/${postSlug(post)}/`}>
+                {post.data.title}
+                <span class="commit-tree-date">{formatPostDate(post.data.date)}</span>
+              </a>
+            ))}
+            <a href="/about/">About</a>
+          </nav>
+        )}
+      </section>
+
+      <SkillsMarquee />
+    </div>
   </main>
 </Layout>
