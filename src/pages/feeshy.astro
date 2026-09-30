@@ -57,8 +57,7 @@ import meowbread from './meowbread.jpeg';
       button, input { font: inherit; }
 
       #fireworks,
-      #card-rain {
-        position: fixed;
+      #fish-rain {
         z-index: 20;
         inset: 0;
         width: 100%;
@@ -66,30 +65,32 @@ import meowbread from './meowbread.jpeg';
         pointer-events: none;
       }
 
-      #card-rain { overflow: hidden; }
+      #fireworks { position: fixed; }
 
-      .falling-card {
+      #fish-rain {
         position: absolute;
-        top: -110px;
-        width: 58px;
-        height: 78px;
-        display: grid;
-        place-items: center;
-        border: 3px outset #fff;
-        border-radius: 5px;
-        background: #fff;
-        color: #111;
-        font: 700 22px Georgia, serif;
-        box-shadow: 5px 7px 0 rgba(0, 0, 0, 0.34);
-        animation: card-fall var(--duration) linear var(--delay) infinite;
+        inset: auto;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 21;
       }
 
-      .falling-card.red { color: #d40000; }
-      .falling-card.back {
-        color: #fff;
-        background:
-          repeating-linear-gradient(45deg, #001c99 0 5px, #fff 5px 7px, #d60000 7px 12px);
-        text-shadow: 1px 1px #000;
+      .falling-fish {
+        position: absolute;
+        top: var(--start-y, -80px);
+        left: 0;
+        font-size: var(--fish-size);
+        line-height: 1;
+        filter: drop-shadow(4px 6px 0 rgba(0, 0, 0, 0.34));
+        animation: fish-fall var(--duration) cubic-bezier(0.22, 0.62, 0.42, 1) forwards;
+      }
+
+      .falling-fish.landed {
+        top: auto;
+        bottom: var(--landing);
+        animation: none;
+        transform: rotate(var(--rest-rotation));
       }
 
       .page-wrap {
@@ -291,15 +292,21 @@ import meowbread from './meowbread.jpeg';
       }
 
       .fake-ad {
+        display: block;
+        width: 100%;
         margin: 10px 0;
         padding: 8px 4px;
         border: 3px outset #fff;
         background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
         color: #000;
         text-align: center;
+        font-family: inherit;
         font-weight: 700;
+        cursor: pointer;
         animation: ad-wobble 1.3s ease-in-out infinite alternate;
       }
+
+      .fake-ad:active { border-style: inset; }
 
       .footer {
         padding: 14px 8px;
@@ -321,10 +328,11 @@ import meowbread from './meowbread.jpeg';
       @keyframes blink { 50% { opacity: 0.18; } }
       @keyframes ad-wobble { to { transform: rotate(2deg) scale(1.03); } }
       @keyframes victory-pulse { 50% { filter: hue-rotate(120deg) saturate(1.6); } }
-      @keyframes card-fall {
-        0% { transform: translate3d(0, -120px, 0) rotate(0deg); }
-        45% { transform: translate3d(var(--drift), 48vh, 0) rotate(380deg); }
-        100% { transform: translate3d(calc(var(--drift) * -0.35), 115vh, 0) rotate(760deg); }
+      @keyframes fish-fall {
+        0% { top: var(--start-y, -80px); transform: rotate(0deg) scale(0.8); }
+        82% { top: calc(100% - var(--fish-size) - var(--landing)); transform: rotate(var(--spin)) scale(1); }
+        91% { top: calc(100% - var(--fish-size) - var(--landing) - 18px); transform: rotate(var(--spin)) scale(1.04, 0.9); }
+        100% { top: calc(100% - var(--fish-size) - var(--landing)); transform: rotate(var(--rest-rotation)) scale(1); }
       }
 
       @media (max-width: 760px) {
@@ -337,13 +345,13 @@ import meowbread from './meowbread.jpeg';
 
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { animation: none !important; }
-        #fireworks, #card-rain { display: none; }
+        #fireworks { display: none; }
       }
     </style>
   </head>
   <body>
     <canvas id="fireworks" aria-hidden="true"></canvas>
-    <div id="card-rain" aria-hidden="true"></div>
+    <div id="fish-rain" aria-hidden="true"></div>
 
     <div class="page-wrap">
       <div class="ticker">
@@ -373,7 +381,7 @@ import meowbread from './meowbread.jpeg';
           <section class="window">
             <div class="window-title">
               <span>Bread_Solitaire.exe</span>
-              <span class="window-controls">_ □ ×</span>
+              <span class="window-controls">- □ x</span>
             </div>
             <div class="window-body">
               <img src={meowbread.src} alt="Meow Bread">
@@ -402,7 +410,7 @@ import meowbread from './meowbread.jpeg';
           <div class="side-title">Cool Stuff!!!</div>
           <p style="text-align:center"><strong>YOU ARE VISITOR:</strong></p>
           <span class="counter">000042</span>
-          <div class="fake-ad">🔥 CLICK HERE TO WIN A FREE FISH 🔥</div>
+          <button class="fake-ad" id="free-fish" type="button">🔥 CLICK HERE TO WIN A FREE FISH 🔥</button>
           <p style="text-align:center; font-size:2rem; margin:12px 0">🐟<br />💿<br />🕷️</p>
           <p><strong>Best viewed with:</strong></p>
           <ul>
@@ -464,33 +472,38 @@ import meowbread from './meowbread.jpeg';
         }
       });
 
-      const suits = ['♠', '♥', '♦', '♣'];
-      const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-      const cardRain = document.getElementById('card-rain');
+      const fishRain = document.getElementById('fish-rain');
+      const freeFishButton = document.getElementById('free-fish');
+      const fishTypes = ['🐟', '🐠', '🐡'];
 
-      function addCard(index, intense = false) {
-        if (!cardRain) return;
-        const card = document.createElement('span');
-        const suit = suits[index % suits.length];
-        card.className = `falling-card ${suit === '♥' || suit === '♦' ? 'red' : ''} ${index % 7 === 0 ? 'back' : ''}`;
-        card.textContent = index % 7 === 0 ? '★' : `${ranks[index % ranks.length]}${suit}`;
-        card.style.left = `${Math.random() * 94}%`;
-        card.style.setProperty('--drift', `${-130 + Math.random() * 260}px`);
-        card.style.setProperty('--duration', `${intense ? 2.8 + Math.random() * 2 : 7 + Math.random() * 7}s`);
-        card.style.setProperty('--delay', `${intense ? Math.random() * -2 : Math.random() * -12}s`);
-        cardRain.append(card);
-        if (intense) window.setTimeout(() => card.remove(), 6000);
-      }
-
-      if (!prefersReducedMotion) {
-        for (let index = 0; index < 12; index += 1) addCard(index);
-      }
+      freeFishButton?.addEventListener('click', () => {
+        if (!fishRain) return;
+        const fish = document.createElement('span');
+        const size = 34 + Math.random() * 34;
+        const buttonBox = freeFishButton.getBoundingClientRect();
+        const pageHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+        const startY = buttonBox.bottom + window.scrollY;
+        fishRain.style.height = `${pageHeight}px`;
+        fish.className = 'falling-fish';
+        fish.textContent = fishTypes[Math.floor(Math.random() * fishTypes.length)];
+        fish.style.left = `${Math.random() * 92}%`;
+        fish.style.setProperty('--fish-size', `${size}px`);
+        fish.style.setProperty('--start-y', `${startY}px`);
+        fish.style.setProperty('--landing', `${8 + Math.random() * 32}px`);
+        fish.style.setProperty('--duration', `${1.7 + Math.random() * 1.4}s`);
+        fish.style.setProperty('--spin', `${360 + Math.random() * 720}deg`);
+        fish.style.setProperty('--rest-rotation', `${-24 + Math.random() * 48}deg`);
+        if (prefersReducedMotion) fish.classList.add('landed');
+        fishRain.append(fish);
+        fish.addEventListener('animationend', () => fish.classList.add('landed'), { once: true });
+      });
 
       const canvas = document.getElementById('fireworks');
       const context = canvas instanceof HTMLCanvasElement ? canvas.getContext('2d') : null;
       let particles = [];
       let lastBurst = 0;
       let frenzyUntil = 0;
+      let fireworksRunning = false;
 
       function resizeCanvas() {
         if (!(canvas instanceof HTMLCanvasElement) || !context) return;
@@ -520,12 +533,12 @@ import meowbread from './meowbread.jpeg';
       function animateFireworks(time) {
         if (!context || prefersReducedMotion) return;
         context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        const interval = time < frenzyUntil ? 170 : 1050;
-        if (time - lastBurst > interval) {
+        const celebrating = time < frenzyUntil;
+        if (celebrating && time - lastBurst > 95) {
           burst(
-            window.innerWidth * (0.15 + Math.random() * 0.7),
-            window.innerHeight * (0.12 + Math.random() * 0.45),
-            time < frenzyUntil ? 62 : 32,
+            window.innerWidth * (0.08 + Math.random() * 0.84),
+            window.innerHeight * (0.08 + Math.random() * 0.58),
+            72,
           );
           lastBurst = time;
         }
@@ -542,18 +555,33 @@ import meowbread from './meowbread.jpeg';
           context.fillStyle = `hsla(${particle.hue}, 100%, 62%, ${Math.min(1, particle.life / 30)})`;
           context.fill();
         }
-        requestAnimationFrame(animateFireworks);
+        if (celebrating || particles.length > 0) {
+          requestAnimationFrame(animateFireworks);
+        } else {
+          fireworksRunning = false;
+          context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        }
       }
 
       function celebrate() {
-        frenzyUntil = performance.now() + 9000;
-        for (let index = 0; index < 52; index += 1) addCard(index, true);
+        frenzyUntil = performance.now() + 11000;
+        for (let index = 0; index < 7; index += 1) {
+          burst(
+            window.innerWidth * (0.08 + Math.random() * 0.84),
+            window.innerHeight * (0.08 + Math.random() * 0.58),
+            80,
+          );
+        }
+        if (!fireworksRunning) {
+          fireworksRunning = true;
+          lastBurst = 0;
+          requestAnimationFrame(animateFireworks);
+        }
       }
 
       if (!prefersReducedMotion && canvas instanceof HTMLCanvasElement) {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas, { passive: true });
-        requestAnimationFrame(animateFireworks);
       }
     </script>
   </body>
