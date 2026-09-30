@@ -1,6 +1,7 @@
 ---
 // Intentionally standalone: the secret page should not inherit the polished
 // site chrome or palette. Its bad-HTML look is part of the challenge.
+import meowbread from './meowbread.jpeg';
 ---
 
 <!doctype html>
@@ -375,7 +376,7 @@
               <span class="window-controls">_ □ ×</span>
             </div>
             <div class="window-body">
-              <img src="/src/pages/meowbread.jpeg" alt="meow bread pic here">
+              <img src={meowbread.src} alt="Meow Bread">
               <h2>but before you get dat bread...</h2>
 
               <div class="clue-box">
@@ -419,7 +420,7 @@
     </div>
 
     <script>
-      const EXPECTED_FLAG_SHA256 = '483f262040fd9fdfda9878aa042c85f92255d5097219893dd3ca791702f246b0';
+      const EXPECTED_FLAG_SHA256 = 'b95706a2ff5b49839684c4a6f2edec7ae792fab3341a65f08a110a95011af88f';
       // heh good luck cracking this :>
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -433,8 +434,8 @@
       const input = document.getElementById('flag-input');
       const result = document.getElementById('flag-result');
       const wrongAnswers = [
-        'NOPE!!! The fish remains suspicious.',
-        'WRONG FLAG :( Try asking the photograph what it remembers.',
+        'NOPE!!! The fish remains feeshy.',
+        'WRONG FLAG :( Have you tried asking for a flag?',
         'ACCESS DENIED by Windows Fish Defender 2003.',
         '404: Correct answer not found!!!',
       ];
@@ -453,7 +454,7 @@
         const correct = (await sha256(candidate)) === EXPECTED_FLAG_SHA256;
         if (correct) {
           result.className = 'success';
-          result.textContent = '✓ CORRECT!!! YOU ARE A CERTIFIED METADATA FISHER!!!';
+          result.textContent = 'CORRECT!!! YOU ARE A CERTIFIED MEOW SANDWICH!!!';
           document.body.classList.add('victory');
           if (!prefersReducedMotion) celebrate();
         } else {
