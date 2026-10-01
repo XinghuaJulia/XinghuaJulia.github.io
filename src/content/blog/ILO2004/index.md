@@ -19,7 +19,7 @@ Source: [IOL 2004 individual problem booklet](https://ioling.org/booklets/iol-20
 
 ## Problem No. 1: Kayapo
 
-Whenever you encounter a problem like this, the first thing you should do is identify commonalities in both the foreign language and its translation. Here, the recurring pieces are not always whole words, but syllables.
+Whenever you encounter a problem like this, the first thing you should do is identify commonalities in both the foreign language and its translation. Here, the recurring pieces may not always be whole words, but syllables.
 
 | # | Original | English |
 |---:|---|---|
@@ -41,7 +41,7 @@ The first one I spotted occurs across four sentences:
 
 #### Verbs
 
-The verbs are a little trickier. At this stage, I am not yet certain whether a verb consists of one syllable or several, so let us begin by treating the following syllables as the verbal roots:
+The verbs are a little trickier. At this stage, I am not yet certain whether a verb consists of one syllable or several, so let us make an assumption that these are the syllables indicating a verb:
 
 - **`to`**: dancing (1, 5)
 - **`ku`**: devouring (4, 6)
@@ -59,24 +59,24 @@ Once the pieces above are identified, the pronouns become much easier to isolate
 
 ### 2. Work out the sentence structure
 
-Luckily, we do not need to worry about tense: every sentence follows one of two broad patterns.
+Luckily, we do not need to worry about tense: every sentence follows either of the below patterns:
 
-- **Subject + verb + optional negation**
-- **Subject + object + verb + optional negation**
+- **(subj) + (verb) + (negation*)**
+- **(subj) + (object) + (verb) + (negation*)**
 
-Honestly, once you reach this stage, the rest falls into place. Just watch where the plural marker goes and you will be fine!
+Honestly, once you reach this stage, the rest falls into place. Just watch where the plural marker goes and you will be A-okay!
 
 **Difficulty:** 🍞
 
 ## Problem No. 2: Swift News Agency
 
-I would like to disagree with the claim that knowledge of English is unnecessary here. To solve this challenge, you do need to recognise an ambiguity in the word *threaten*.
+I would like to disagree with the claim that knowledge of English is unnecessary here. To solve this challenge, you do need to recognise that there is an ambiguity in the word *threaten*.
 
 > **Quick definition**
 >
 > A **homonym** is a word that shares its spelling and pronunciation with another word but has a different meaning.
 
-For this puzzle, two senses of *threaten* matter:
+For this puzzle, there are two meanings to *threaten*:
 
 1. To endanger something.
 2. To show signs that something unpleasant may happen or worsen.
@@ -88,7 +88,7 @@ Knowing this helps us divide the articles into two groups:
 2. **Show signs of worsening:** articles 3, 4, 5, and 11  
    Pattern: **cause threatens an undesirable outcome**.
 
-Three effects remain ambiguous:
+Three of these effects are ambiguous:
 
 - the start of the shipping season on small lakes;
 - tax reform;
@@ -183,14 +183,14 @@ The full solution should be fairly straightforward from there. Just note that mu
 
 I have now looked at five years of these contests. It is not a huge sample, but it is enough to notice a general structure. The papers usually include some combination of:
 
-- **Number problems**, especially in more recent years: deciphering how a language handles counting, numbers, or dates.
-- **Sentence or word mapping:** translating from the examples provided. You may also be asked to construct new sentences in the language.
+- Number problems: especially in more recent years: deciphering how a language handles counting, numbers, or dates.
+- Sentence or word mapping: translating from the examples provided. You may also be asked to construct new sentences in the language.
 
 The main challenge lies in spotting patterns quickly and noticing minuscule details: accents, affixes, and sentence structure. Occasionally, some linguistics knowledge is useful, as shown above, where the properties of vowels and consonants govern how words are formed. Still, most of these challenges are very doable without an in-depth knowledge of the language.
 
 Of course, as a colleague aptly pointed out:
 
-> *What if I know the language? Isn't that an unfair advantage?*
+> *What if I know the language? Isn't that cheating?*
 
 Well, yes and no. I initially brushed off his concern, only to be hit with IOL 2003 Problem 5, which was entirely in French. Lovely.
 
@@ -198,7 +198,7 @@ Sure, it may be an advantage if you happen to speak that particular language or 
 
 ### The whole idea of solving puzzles
 
-To me, once you find an attack vector, the key or turning point, the puzzle collapses from a complex problem with frayed ends into an organised problem. If you take anything away from this, it is to not be afraid to keep cracking your head at it.
+To me, once you find an attack vector, a key observation, or turning point, the puzzle collapses from a complex problem with frayed ends into an organised one. If you take anything away from this, it is to not be afraid to keep cracking your head at it.
 
 If you are stuck, take a walk. Go outside. See the sun. Let the idea sink in for a bit. Maybe, just maybe, when you return to the problem, you will see a fresh angle you had not considered before :>
 
