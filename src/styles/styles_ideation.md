@@ -25,3 +25,7 @@ img from Gokuku
 Made some progress!
 ![alt text](image-2.png)
 The bread is catting :3
+
+New logo is out! I realised that the original Astro favicon icon has thick, defined lines that allows the icon to be visible even from a distance... With that, I layered over everything, still using svg... and after an hour of toil, new logo is up!
+![alt text](image-3.png)
+
