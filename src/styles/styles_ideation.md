@@ -21,3 +21,7 @@ Icons:
 img from Gokuku
 * Having bread icons seems rlly cute
 * website icon and MeowBread icon should be a cat's head stuck inside toast
+
+Made some progress!
+![alt text](image-2.png)
+The bread is catting :3
