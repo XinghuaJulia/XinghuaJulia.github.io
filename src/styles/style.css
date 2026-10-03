@@ -498,9 +498,17 @@ code, pre, kbd, samp {
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    color: var(--muted);
+    padding: 0.48rem 0.9rem;
+    border: 2px solid color-mix(in srgb, var(--accent) 52%, var(--line-strong));
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--bg-elevated) 94%, transparent);
+    box-shadow:
+        inset 0 0 0 6px color-mix(in srgb, var(--bg) 76%, transparent),
+        0 0.22rem 0 color-mix(in srgb, var(--ink) 14%, transparent);
+    color: var(--ink-soft);
     font-size: 0.9rem;
     font-family: var(--mono);
+    backdrop-filter: blur(8px);
 }
 
 /* Blinking block cursor marks the current page in the nav. */
