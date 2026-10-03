@@ -77,6 +77,28 @@ const currentPath = Astro.url.pathname;
           <span>MeowBread</span>
         </a>
 
+        <div class="nav-compact-links" aria-label="Primary navigation shortcuts">
+          <a class="nav-icon-link" href="/" aria-label="Home" aria-current={currentPath === '/' ? 'page' : undefined}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 11 9-8 9 8" />
+              <path d="M5 10v10h14V10" />
+              <path d="M9 20v-6h6v6" />
+            </svg>
+          </a>
+          <a class="nav-icon-link" href="/blog/" aria-label="Blog" aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v17H6.5A2.5 2.5 0 0 0 4 22Z" />
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v17h4.5A2.5 2.5 0 0 1 20 22Z" />
+            </svg>
+          </a>
+          <a class="nav-icon-link" href="/about/" aria-label="About" aria-current={currentPath === '/about/' ? 'page' : undefined}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21a8 8 0 0 1 16 0" />
+            </svg>
+          </a>
+        </div>
+
         <details class="nav-menu">
           <summary class="nav-menu-button" aria-label="Open navigation">
             <span></span>
@@ -84,9 +106,18 @@ const currentPath = Astro.url.pathname;
             <span></span>
           </summary>
           <div class="nav-menu-panel">
-            <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Home</a>
-            <a href="/blog/" aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}>Blog</a>
-            <a href="/about/" aria-current={currentPath === '/about/' ? 'page' : undefined}>About</a>
+            <div class="nav-menu-primary">
+              <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Home</a>
+              <a href="/blog/" aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}>Blog</a>
+              <a href="/about/" aria-current={currentPath === '/about/' ? 'page' : undefined}>About</a>
+            </div>
+            <div class="nav-menu-tools" aria-label="Site tools and social links">
+              <button type="button" data-search-open>Search</button>
+              <a href="https://github.com/XinghuaJulia" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://linkedin.com/in/xiner-lin-julia" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="mailto:xiner.lin.julia@gmail.com">Email</a>
+              <a href="/rss.xml">RSS</a>
+            </div>
           </div>
         </details>
 
@@ -207,9 +238,9 @@ const currentPath = Astro.url.pathname;
         const overlay = document.getElementById('search-overlay');
         const input = document.getElementById('search-input') as HTMLInputElement | null;
         const results = document.getElementById('search-results');
-        const openBtn = document.getElementById('search-open');
+        const openBtns = document.querySelectorAll<HTMLElement>('#search-open, [data-search-open]');
         const closeBtn = document.getElementById('search-close-btn');
-        if (!overlay || !input || !results || !openBtn || !closeBtn) return;
+        if (!overlay || !input || !results || openBtns.length === 0 || !closeBtn) return;
 
         let items: HTMLAnchorElement[] = [];
         let activeIndex = -1;
@@ -328,7 +359,7 @@ const currentPath = Astro.url.pathname;
           debounceTimer = setTimeout(() => runSearch(input.value), 150);
         }, { signal });
 
-        openBtn.addEventListener('click', openOverlay, { signal });
+        openBtns.forEach((button) => button.addEventListener('click', openOverlay, { signal }));
         closeBtn.addEventListener('click', closeOverlay, { signal });
         overlay.addEventListener('click', (e) => {
           if (e.target === overlay) closeOverlay();

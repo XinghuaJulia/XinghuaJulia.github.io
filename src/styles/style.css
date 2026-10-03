@@ -495,6 +495,9 @@ code, pre, kbd, samp {
 }
 
 .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 1.25rem;
@@ -598,6 +601,27 @@ code, pre, kbd, samp {
 
 .nav-menu-panel a:hover,
 .nav-menu-panel a[aria-current="page"] {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.nav-menu-tools {
+    display: none;
+}
+
+.nav-menu-primary {
+    display: grid;
+}
+
+.nav-compact-links {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: auto;
+}
+
+.nav-compact-links .nav-icon-link[aria-current="page"] {
+    border-color: color-mix(in srgb, var(--accent) 52%, var(--line));
     background: var(--accent-soft);
     color: var(--accent);
 }
@@ -1384,7 +1408,7 @@ button.nav-icon-link {
 }
 
 .article-layout--no-toc {
-    grid-template-columns: minmax(0, 760px);
+    grid-template-columns: minmax(0, 700px);
     justify-content: center;
 }
 
@@ -1480,7 +1504,7 @@ button.nav-icon-link {
 .article-prose img {
     width: auto;
     height: auto;
-    max-width: min(100%, 760px);
+    max-width: min(100%, 700px);
     max-height: 72vh;
     margin: 1.75rem auto;
     object-fit: contain;
@@ -1809,9 +1833,63 @@ button.nav-icon-link {
 
 /* ===== Responsive ===== */
 
+/* Compact header: retain direct page access as icons and move the utility
+   and social links into the hamburger menu. */
+@media (max-width: 700px) {
+    .nav-menu {
+        display: flex;
+        margin-left: 0;
+    }
+
+    .nav {
+        flex-wrap: nowrap;
+    }
+
+    .nav-tools {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-compact-links {
+        display: flex;
+    }
+
+    .nav-menu-primary {
+        display: none;
+    }
+
+    .nav-menu-tools {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.25rem;
+    }
+
+    .nav-menu-tools a,
+    .nav-menu-tools button {
+        min-width: 0;
+        border: 0;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        padding: 0.62rem 0.7rem;
+        color: var(--ink-soft);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .nav-menu-tools a:hover,
+    .nav-menu-tools button:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+}
+
 @media (max-width: 860px) {
-    .nav-links { display: none; }
-    .nav-menu { display: flex; }
 
     .about-grid {
         display: block;
@@ -1955,22 +2033,39 @@ button.nav-icon-link {
         margin-top: 3rem;
     }
 
-    .nav-tools {
-        gap: 0.35rem;
-    }
-
-    /* The brand + hamburger + icon row don't all fit on one line below
-       ~370px (iPhone SE and similar) — wrap the icon row onto its own
-       line instead of letting it overflow the viewport. Harmless on
-       wider phones where everything already fits on one row. */
     .nav {
-        flex-wrap: wrap;
-        row-gap: 0.5rem;
+        flex-wrap: nowrap;
+        padding-top: 0.55rem;
+        padding-bottom: 0.55rem;
     }
 
-    .nav-tools {
-        flex-basis: 100%;
-        justify-content: flex-end;
+    .nav-menu {
+        margin-left: 0;
+    }
+
+    .nav-menu-tools {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .brand > span {
+        display: none;
+    }
+
+    .brand-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .nav {
+        gap: 0.45rem;
+    }
+
+    .nav-compact-links {
+        gap: 0.25rem;
     }
 }
 
