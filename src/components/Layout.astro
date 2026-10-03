@@ -17,7 +17,7 @@ const {
   ogType = 'website',
 } = Astro.props;
 
-const site = 'https://example.com';
+const site = Astro.site ?? new URL('https://meowbreadmeow.com');
 const canonicalUrl = new URL(canonicalPath, site).toString();
 // Replace public/assets/og.png with your own 1200x630 social preview image.
 const ogImageUrl = new URL('/assets/og.png', site).toString();
