@@ -662,6 +662,24 @@ code, pre, kbd, samp {
     transition: border-color 0.12s ease, color 0.12s ease;
 }
 
+.theme-hint-cat {
+    position: absolute;
+    left: 50%;
+    /* The updated asset uses a square 420px canvas. Its paws end around
+       y=279, leaving roughly one third of the canvas below the body for the
+       tail. Offset that portion through the selector so the loaf stays put. */
+    bottom: calc(100% - 2.4rem);
+    width: 7rem;
+    height: 7rem;
+    transform: translateX(-50%);
+    background: var(--ink-soft);
+    -webkit-mask: url("/assets/cat_loafing_on_flavours.svg") center / contain no-repeat;
+    mask: url("/assets/cat_loafing_on_flavours.svg") center / contain no-repeat;
+    filter: drop-shadow(0 2px 1px color-mix(in srgb, var(--bg) 75%, transparent));
+    pointer-events: none;
+    transition: background 0.12s ease;
+}
+
 .theme-hint::after {
     content: "";
     position: absolute;
@@ -680,6 +698,10 @@ code, pre, kbd, samp {
     border-color: var(--accent);
     color: var(--accent);
     background: var(--accent-soft);
+}
+
+.theme-hint:hover .theme-hint-cat {
+    background: var(--accent);
 }
 
 .theme-overlay {
