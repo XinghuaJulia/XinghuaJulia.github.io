@@ -1837,6 +1837,18 @@ button.nav-icon-link {
 /* Phones: tighten the big desktop whitespace so pages start (and sections
    meet) closer to the viewport. */
 @media (max-width: 640px) {
+    body {
+        font-size: 0.92rem;
+    }
+
+    .brand {
+        font-size: 0.9rem;
+    }
+
+    .nav-menu-panel a {
+        font-size: 0.78rem;
+    }
+
     .brand-logo {
         width: 2.75rem;
         height: 2.75rem;
@@ -1845,6 +1857,60 @@ button.nav-icon-link {
     .page-hero {
         padding-top: 2.75rem;
         padding-bottom: 1.75rem;
+    }
+
+    .page-hero h1 {
+        font-size: 2.25rem;
+    }
+
+    .hero-lede,
+    .page-hero .hero-lede {
+        font-size: 0.94rem;
+    }
+
+    .commit-tree a,
+    .commit-tree .commit-tree-head {
+        font-size: 0.86rem;
+    }
+
+    .post-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .article-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .article-header p:last-child {
+        font-size: 0.96rem;
+    }
+
+    .article-prose {
+        font-size: 0.94rem;
+    }
+
+    .article-prose h1 {
+        font-size: 1.8rem;
+    }
+
+    .article-prose h2 {
+        font-size: 1.45rem;
+    }
+
+    .article-prose h3 {
+        font-size: 1.12rem;
+    }
+
+    .article-prose blockquote {
+        font-size: 0.96rem;
+    }
+
+    .about-prose p {
+        font-size: 0.94rem;
+    }
+
+    .footer {
+        font-size: 0.78rem;
     }
 
     .section {
