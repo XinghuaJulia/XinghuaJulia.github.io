@@ -28,5 +28,5 @@ export const PALETTE_VALUES = [
 
 export const DEFAULT_PALETTE = {
   light: 'ube-neat',
-  dark: 'sesame-sweet',
+  dark: 'ube-neat',
 } as const;
