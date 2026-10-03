@@ -23,6 +23,7 @@
     --terminal-2: #131312;
     --accent: #4a9eff;
     --accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+    --selection-bg: color-mix(in srgb, #4a9eff 28%, transparent);
     --green: #2d9f52;
     --yellow: #b8860b;
     --red: #c73e3e;
@@ -65,6 +66,14 @@
   --accent: #4a9eff; --green: #55d66b; --yellow: #e6d55a; --red: #ff6b6b;
   --term-bg: #000000; --term-active-bg: #101010; --term-border: #1a1a1a; --term-text: #d8d8d8; --term-muted: #555555; --term-prompt: #4a9eff;
   --term-cmd: #55d66b; --term-str: #e6d55a;
+}
+[data-palette="toxic-waste"] {
+  --bg: #000000; --bg-elevated: #080808; --ink: #ffffff; --ink-soft: #d8d8d8;
+  --muted: #888888; --muted-2: #555555; --line: #1a1a1a; --line-strong: #2a2a2a;
+  --accent: #39ff14; --green: #55ff55; --yellow: #d7ff4f; --red: #ff5f56;
+  --selection-bg: color-mix(in srgb, #39ff14 34%, transparent);
+  --term-bg: #000000; --term-active-bg: #071407; --term-border: #173117; --term-text: #d8ffd8; --term-muted: #568056; --term-prompt: #39ff14;
+  --term-cmd: #55ff55; --term-str: #d7ff4f;
 }
 [data-palette="tokyo-night"] {
   --bg: #1a1b26; --bg-elevated: #202331; --ink: #d5dcff; --ink-soft: #c0caf5;
@@ -164,10 +173,12 @@
   --term-bg: #191724; --term-active-bg: #26233a; --term-border: #312f45; --term-text: #e0def4; --term-muted: #6e6a86; --term-prompt: #c4a7e7;
   --term-cmd: #9ccfd8; --term-str: #f6c177;
 }
-[data-palette="rose-pine-dawn"] {
+[data-palette="rose-pine-dawn"],
+[data-palette="ube-neat"] {
   --bg: #faf4ed; --bg-elevated: #f2e9e1; --ink: #191724; --ink-soft: #464261;
   --muted: #797593; --muted-2: #9893a5; --line: #e6ded7; --line-strong: #d8d0ca;
   --accent: #907aa9; --green: #56949f; --yellow: #ea9d34; --red: #b4637a;
+  --selection-bg: color-mix(in srgb, #907aa9 34%, transparent);
   --term-bg: #faf4ed; --term-active-bg: #fffaf3; --term-border: #e6ded7; --term-text: #464261; --term-muted: #9893a5; --term-prompt: #907aa9;
   --term-cmd: #56949f; --term-str: #ea9d34;
 }
@@ -185,17 +196,21 @@
   --term-bg: #2d353b; --term-active-bg: #3d484d; --term-border: #475258; --term-text: #d3c6aa; --term-muted: #7a8478; --term-prompt: #a7c080;
   --term-cmd: #83c092; --term-str: #dbbc7f;
 }
-[data-palette="everforest-light"] {
+[data-palette="everforest-light"],
+[data-palette="matcha-munch"] {
   --bg: #fdf6e3; --bg-elevated: #f4f0d9; --ink: #2d353b; --ink-soft: #5c6a72;
   --muted: #829181; --muted-2: #a6b0a0; --line: #e0dcc7; --line-strong: #bdc3af;
   --accent: #8da101; --green: #35a77c; --yellow: #dfa000; --red: #f85552;
+  --selection-bg: color-mix(in srgb, #8da101 32%, transparent);
   --term-bg: #fdf6e3; --term-active-bg: #efebd4; --term-border: #e0dcc7; --term-text: #5c6a72; --term-muted: #a6b0a0; --term-prompt: #8da101;
   --term-cmd: #35a77c; --term-str: #dfa000;
 }
-[data-palette="ayu"] {
+[data-palette="ayu"],
+[data-palette="burnt-cheese"] {
   --bg: #10141c; --bg-elevated: #141821; --ink: #d9d7d0; --ink-soft: #bfbdb6;
   --muted: #6c7380; --muted-2: #555e73; --line: #1b1f29; --line-strong: #475266;
   --accent: #e6b450; --green: #aad94c; --yellow: #e6c08a; --red: #d95757;
+  --selection-bg: color-mix(in srgb, #e6b450 34%, transparent);
   --term-bg: #10141c; --term-active-bg: #161a24; --term-border: #1b1f29; --term-text: #bfbdb6; --term-muted: #555e73; --term-prompt: #e6b450;
   --term-cmd: #aad94c; --term-str: #e6c08a;
 }
@@ -237,13 +252,15 @@
   --term-bg: #011627; --term-active-bg: #0e293f; --term-border: #1d3b53; --term-text: #d6deeb; --term-muted: #4b6479; --term-prompt: #82aaff;
   --term-cmd: #addb67; --term-str: #ecc48d;
 }
-[data-palette="night-owl-light"] {
+[data-palette="night-owl-light"],
+[data-palette="blueberry-nice"] {
   /* Light Owl's own mid-greys top out at 2.43:1 on its background, so --muted
      borrows #5f7e97 from Night Owl proper -- same extension, same family, the
      way catppuccin-latte takes its --ink from Mocha. */
   --bg: #fbfbfb; --bg-elevated: #f6f6f6; --ink: #011627; --ink-soft: #403f53;
   --muted: #5f7e97; --muted-2: #90a7b2; --line: #e0e0e0; --line-strong: #d9d9d9;
   --accent: #4876d6; --green: #08916a; --yellow: #daaa01; --red: #e64d49;
+  --selection-bg: color-mix(in srgb, #4876d6 30%, transparent);
   --term-bg: #fbfbfb; --term-active-bg: #e0e7ea; --term-border: #e0e0e0; --term-text: #403f53; --term-muted: #90a7b2; --term-prompt: #4876d6;
   --term-cmd: #08916a; --term-str: #daaa01;
 }
@@ -276,8 +293,36 @@
   --term-cmd: #c3e88d; --term-str: #ffcb6b;
 }
 
+[data-palette="starberry-shortcircuit"] {
+  --bg: #f8dfe4; --bg-elevated: #fff0f2; --ink: #3f2924; --ink-soft: #5d3b33;
+  --muted: #795b53; --muted-2: #a47f78; --line: #e6c2c5; --line-strong: #c99ca0;
+  --accent: #74483b; --green: #557a4e; --yellow: #a76b19; --red: #b64c5a;
+  --selection-bg: color-mix(in srgb, #74483b 28%, transparent);
+  --term-bg: #3f2924; --term-active-bg: #563830; --term-border: #74483b; --term-text: #fff0f2; --term-muted: #c99ca0; --term-prompt: #ffb3c1;
+  --term-cmd: #b8d8a8; --term-str: #ffd38a;
+}
+
+[data-palette="spujcpz"] {
+  --bg: #fff8df; --bg-elevated: #fffdf3; --ink: #34271d; --ink-soft: #564333;
+  --muted: #765f4c; --muted-2: #a59079; --line: #e8d9b9; --line-strong: #cdbb98;
+  --accent: #765033; --green: #64784b; --yellow: #9b721e; --red: #a84f42;
+  --selection-bg: color-mix(in srgb, #765033 28%, transparent);
+  --term-bg: #34271d; --term-active-bg: #49372a; --term-border: #765033; --term-text: #fff8df; --term-muted: #bca98d; --term-prompt: #e3b778;
+  --term-cmd: #a9c27c; --term-str: #f0c97c;
+}
+
+[data-palette="sesame-sweet"] {
+  --bg: #343434; --bg-elevated: #414141; --ink: #f4f0e8; --ink-soft: #ddd7cd;
+  --muted: #aaa39a; --muted-2: #817b74; --line: #515151; --line-strong: #68645f;
+  --accent: #c9bca8; --green: #9fbd8b; --yellow: #dcc58a; --red: #df8f86;
+  --selection-bg: color-mix(in srgb, #c9bca8 32%, transparent);
+  --term-bg: #272727; --term-active-bg: #3b3b3b; --term-border: #515151; --term-text: #eee9df; --term-muted: #817b74; --term-prompt: #c9bca8;
+  --term-cmd: #9fbd8b; --term-str: #dcc58a;
+}
+
 [data-palette="catppuccin"],
 [data-palette="terminal"],
+[data-palette="toxic-waste"],
 [data-palette="tokyo-night"],
 [data-palette="dracula"],
 [data-palette="nord"],
@@ -289,12 +334,14 @@
 [data-palette="vesper"],
 [data-palette="everforest"],
 [data-palette="ayu"],
+[data-palette="burnt-cheese"],
 [data-palette="github-dark"],
 [data-palette="monokai"],
 [data-palette="night-owl"],
 [data-palette="oxocarbon"],
 [data-palette="poimandres"],
-[data-palette="palenight"] {
+[data-palette="palenight"],
+[data-palette="sesame-sweet"] {
   --logo-filter: invert(1) hue-rotate(180deg) brightness(1.08) contrast(0.9) saturate(1.05);
   --logo-opacity: 0.72;
 }
@@ -344,18 +391,62 @@ code, pre, kbd, samp {
 }
 
 ::selection {
-    background: var(--accent-soft);
+    background: var(--selection-bg);
 }
 
 /* ===== Header / Nav ===== */
 
 .site-header {
+    --canopy-stripe-width: 3.5rem;
+    --canopy-drop: 1.35rem;
+    --canopy-accent: color-mix(in srgb, var(--accent) 68%, var(--bg));
+    --canopy-base: color-mix(in srgb, var(--bg) 88%, var(--bg-elevated));
     position: sticky;
     top: 0;
     z-index: 20;
+    isolation: isolate;
+    margin-bottom: var(--canopy-drop);
     backdrop-filter: blur(12px);
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
-    border-bottom: 1px solid var(--line);
+    background: repeating-linear-gradient(
+        90deg,
+        var(--canopy-accent) 0 var(--canopy-stripe-width),
+        var(--canopy-base) var(--canopy-stripe-width) calc(var(--canopy-stripe-width) * 2)
+    );
+    border-bottom: 0;
+}
+
+.site-header::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: var(--canopy-drop);
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--canopy-accent) 0 var(--canopy-stripe-width),
+        var(--canopy-base) var(--canopy-stripe-width) calc(var(--canopy-stripe-width) * 2)
+    );
+    -webkit-mask: radial-gradient(
+        ellipse 50% 100% at 50% 0,
+        #000 99%,
+        transparent 100%
+    ) 0 0 / var(--canopy-stripe-width) 100% repeat-x;
+    mask: radial-gradient(
+        ellipse 50% 100% at 50% 0,
+        #000 99%,
+        transparent 100%
+    ) 0 0 / var(--canopy-stripe-width) 100% repeat-x;
+    filter: drop-shadow(0 0.3rem 0.24rem color-mix(in srgb, var(--ink) 20%, transparent));
+}
+
+/* On the homepage, the photograph begins at the header edge and the
+   absolutely positioned scallops hang over it. Other pages retain enough
+   space below the header for the canopy drop. */
+.site-header--home {
+    margin-bottom: 0;
 }
 
 .nav {
@@ -363,6 +454,7 @@ code, pre, kbd, samp {
        to the hamburger itself pushes the panel off-screen on narrow
        viewports (the button sits left of the nav-tools icon row). */
     position: relative;
+    z-index: 1;
     max-width: var(--max);
     margin: 0 auto;
     padding: 0.85rem 1.25rem;
@@ -496,9 +588,11 @@ code, pre, kbd, samp {
     justify-content: center;
     width: 2.1rem;
     height: 2.1rem;
-    border: 1px solid var(--line);
+    border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
     border-radius: var(--radius-md);
-    color: var(--muted);
+    color: color-mix(in srgb, var(--ink) 82%, transparent);
+    background: color-mix(in srgb, var(--bg-elevated) 68%, transparent);
+    backdrop-filter: blur(6px);
     transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
 }
 
@@ -697,7 +791,7 @@ code, pre, kbd, samp {
 
 button.nav-icon-link {
     padding: 0;
-    background: transparent;
+    background: color-mix(in srgb, var(--bg-elevated) 68%, transparent);
     cursor: pointer;
     font-family: inherit;
 }
@@ -924,8 +1018,6 @@ button.nav-icon-link {
     --muted-2: rgba(255, 255, 255, 0.58);
     --line: rgba(255, 255, 255, 0.2);
     --line-strong: rgba(255, 255, 255, 0.5);
-    --accent: #a9d2ff;
-    --accent-soft: rgba(169, 210, 255, 0.16);
     --bg: #111214;
     position: relative;
     isolation: isolate;

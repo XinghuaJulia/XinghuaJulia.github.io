@@ -6,12 +6,14 @@ The following are some of the ideas I want to achieve:
 Flavour: Pick your flavour of bread. 
 Have flavour as the text, and "select your flavour of noms" arrow that follows the webpage, encouraging users to pick a flavour.
 ![alt text](image-1.png)
-* blueberry nice: white base with purple
+* ube neat: white base with purple. Same as existing Rose Pine Dawn.
 * starberry shortcircuit: light pink base and brown.
-* spujcpz: off white (almost buttery colour) base, brown. Basically a notebook theme
-* matcha munch: off white (light green) base with matcha green
-* sesame sweet: replaces your typical dark theme. Grey base.
+* spujcpz: off white (almost buttery colour) base, brown. Basically a notebook theme.
+* matcha munch: off white (light green) base with matcha green. Same as existing Everforst Light.
+* sesame sweet: replaces your typical dark theme. Grey base. 
 * toxic waste: black and green, like h4ck3r terminal.
+* burnt cheese: Same as existing Ayu Dark.
+* blueberry nice: white base with blue. Same as existing Light Owl.
 
 
 
@@ -25,3 +27,12 @@ img from Gokuku
 Made some progress!
 ![alt text](image-2.png)
 The bread is catting :3
+
+New logo is out! I realised that the original Astro favicon icon has thick, defined lines that allows the icon to be visible even from a distance... With that, I layered over everything, still using svg... and after an hour of toil, new logo is up!
+![alt text](image-3.png)
+
+New themes are out! With many choices abound:
+![alt text](image-5.png)
+
+Including toxic waste... which is your typical h4ck3r terminal theme. But honestly, why would anyone even want this:
+![alt text](image-4.png)

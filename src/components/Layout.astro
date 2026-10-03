@@ -1,6 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import { DEFAULT_PALETTE } from '../lib/palette';
+import { DEFAULT_PALETTE, PALETTE_VALUES } from '../lib/palette';
 import '../styles/style.css';
 
 interface Props {
@@ -52,14 +52,16 @@ const currentPath = Astro.url.pathname;
     <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="preload" href="/assets/jbm.woff2" as="font" type="font/woff2" crossorigin />
-    <script is:inline define:vars={{ DEFAULT_PALETTE }}>
+    <script is:inline define:vars={{ DEFAULT_PALETTE, PALETTE_VALUES }}>
       (() => {
         const apply = () => {
           const saved = localStorage.getItem('site-palette');
           const system = window.matchMedia('(prefers-color-scheme: dark)').matches
             ? DEFAULT_PALETTE.dark
             : DEFAULT_PALETTE.light;
-          document.documentElement.setAttribute('data-palette', saved || system);
+          const palette = PALETTE_VALUES.includes(saved) ? saved : system;
+          if (saved && saved !== palette) localStorage.removeItem('site-palette');
+          document.documentElement.setAttribute('data-palette', palette);
         };
         apply();
         document.addEventListener('astro:after-swap', apply);
@@ -68,7 +70,7 @@ const currentPath = Astro.url.pathname;
     <ClientRouter />
   </head>
   <body>
-    <header class="site-header">
+    <header class:list={["site-header", { "site-header--home": currentPath === "/" }]}>
       <nav class="nav" aria-label="Primary navigation">
         <a class="brand" href="/" aria-label="MeowBread home">
           <img class="brand-logo" src="/meowbread.svg" alt="" width="48" height="48" aria-hidden="true" />
@@ -141,40 +143,16 @@ const currentPath = Astro.url.pathname;
     <div class="theme-overlay" id="theme-overlay" hidden>
       <div class="theme-overlay-panel" role="dialog" aria-label="Theme switcher" aria-modal="true">
         <div class="theme-overlay-list" id="theme-overlay-list" role="listbox" aria-label="Themes">
-          <div class="theme-sep"><span>Dark</span></div>
-          <button type="button" role="option" data-value="ayu">Ayu Dark</button>
-          <button type="button" role="option" data-value="catppuccin">Catppuccin</button>
-          <button type="button" role="option" data-value="dracula">Dracula</button>
-          <button type="button" role="option" data-value="everforest">Everforest</button>
-          <button type="button" role="option" data-value="github-dark">GitHub Dark</button>
-          <button type="button" role="option" data-value="gruvbox">Gruvbox</button>
-          <button type="button" role="option" data-value="kanagawa">Kanagawa</button>
-          <button type="button" role="option" data-value="monokai">Monokai</button>
-          <button type="button" role="option" data-value="night-owl">Night Owl</button>
-          <button type="button" role="option" data-value="nord">Nord</button>
-          <button type="button" role="option" data-value="one-dark">One Dark</button>
-          <button type="button" role="option" data-value="oxocarbon">Oxocarbon</button>
-          <button type="button" role="option" data-value="palenight">Palenight</button>
-          <button type="button" role="option" data-value="poimandres">Poimandres</button>
-          <button type="button" role="option" data-value="rose-pine">Rose Pine</button>
-          <button type="button" role="option" data-value="solarized">Solarized</button>
-          <button type="button" role="option" data-value="terminal">Terminal</button>
-          <button type="button" role="option" data-value="tokyo-night">Tokyo Night</button>
-          <button type="button" role="option" data-value="vesper">Vesper</button>
           <div class="theme-sep"><span>Light</span></div>
-          <button type="button" role="option" data-value="alucard">Alucard</button>
-          <button type="button" role="option" data-value="ayu-light">Ayu Light</button>
-          <button type="button" role="option" data-value="catppuccin-latte">Catppuccin Latte</button>
-          <button type="button" role="option" data-value="everforest-light">Everforest Light</button>
-          <button type="button" role="option" data-value="github-light">GitHub Light</button>
-          <button type="button" role="option" data-value="gruvbox-light">Gruvbox Light</button>
-          <button type="button" role="option" data-value="kanagawa-lotus">Kanagawa Lotus</button>
-          <button type="button" role="option" data-value="night-owl-light">Light Owl</button>
-          <button type="button" role="option" data-value="one-light">One Light</button>
-          <button type="button" role="option" data-value="oxocarbon-light">Oxocarbon Light</button>
-          <button type="button" role="option" data-value="rose-pine-dawn">Rose Pine Dawn</button>
-          <button type="button" role="option" data-value="solarized-light">Solarized Light</button>
-          <button type="button" role="option" data-value="tokyo-night-day">Tokyo Day</button>
+          <button type="button" role="option" data-value="ube-neat">Ube Neat</button>
+          <button type="button" role="option" data-value="starberry-shortcircuit">Starberry Shortcircuit</button>
+          <button type="button" role="option" data-value="spujcpz">Spujcpz</button>
+          <button type="button" role="option" data-value="matcha-munch">Matcha Munch</button>
+          <button type="button" role="option" data-value="blueberry-nice">Blueberry Nice</button>
+          <div class="theme-sep"><span>Dark</span></div>
+          <button type="button" role="option" data-value="sesame-sweet">Sesame Sweet</button>
+          <button type="button" role="option" data-value="toxic-waste">Toxic Waste</button>
+          <button type="button" role="option" data-value="burnt-cheese">Burnt Cheese</button>
         </div>
         <div class="theme-overlay-footer">
           <span class="theme-overlay-actions">
