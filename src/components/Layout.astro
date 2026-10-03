@@ -68,7 +68,7 @@ const currentPath = Astro.url.pathname;
     <ClientRouter />
   </head>
   <body>
-    <header class="site-header">
+    <header class:list={["site-header", { "site-header--home": currentPath === "/" }]}>
       <nav class="nav" aria-label="Primary navigation">
         <a class="brand" href="/" aria-label="MeowBread home">
           <img class="brand-logo" src="/meowbread.svg" alt="" width="48" height="48" aria-hidden="true" />
