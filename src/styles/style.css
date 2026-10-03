@@ -401,6 +401,7 @@ code, pre, kbd, samp {
     --canopy-drop: 1.35rem;
     --canopy-accent: color-mix(in srgb, var(--accent) 68%, var(--bg));
     --canopy-base: color-mix(in srgb, var(--bg) 88%, var(--bg-elevated));
+    --canopy-edge: color-mix(in srgb, var(--accent) 42%, var(--line-strong));
     position: sticky;
     top: 0;
     z-index: 20;
@@ -415,20 +416,15 @@ code, pre, kbd, samp {
     border-bottom: 0;
 }
 
+.site-header::before,
 .site-header::after {
     content: "";
     position: absolute;
     z-index: 0;
-    top: 100%;
     right: 0;
     left: 0;
     height: var(--canopy-drop);
     pointer-events: none;
-    background: repeating-linear-gradient(
-        90deg,
-        var(--canopy-accent) 0 var(--canopy-stripe-width),
-        var(--canopy-base) var(--canopy-stripe-width) calc(var(--canopy-stripe-width) * 2)
-    );
     -webkit-mask: radial-gradient(
         ellipse 50% 100% at 50% 0,
         #000 99%,
@@ -439,7 +435,24 @@ code, pre, kbd, samp {
         #000 99%,
         transparent 100%
     ) 0 0 / var(--canopy-stripe-width) 100% repeat-x;
-    filter: drop-shadow(0 0.3rem 0.24rem color-mix(in srgb, var(--ink) 20%, transparent));
+}
+
+/* A second, slightly lowered scalloped layer forms a true outline. Unlike a
+   CSS border or a subtle shadow, it follows every masked curve and remains
+   visible when a canopy stripe matches the page background. */
+.site-header::before {
+    top: calc(100% + 1px);
+    background: var(--canopy-edge);
+    filter: drop-shadow(0 0.25rem 0.2rem color-mix(in srgb, var(--ink) 18%, transparent));
+}
+
+.site-header::after {
+    top: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--canopy-accent) 0 var(--canopy-stripe-width),
+        var(--canopy-base) var(--canopy-stripe-width) calc(var(--canopy-stripe-width) * 2)
+    );
 }
 
 /* On the homepage, the photograph begins at the header edge and the
