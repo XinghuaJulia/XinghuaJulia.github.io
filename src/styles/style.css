@@ -532,7 +532,10 @@ code, pre, kbd, samp {
 
 .nav-menu {
     display: none;
+    align-items: center;
+    height: 2.1rem;
     margin-left: auto;
+    line-height: 0;
 }
 
 .nav-menu-button {
@@ -549,6 +552,8 @@ code, pre, kbd, samp {
     cursor: pointer;
     list-style: none;
     transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+    background: color-mix(in srgb, var(--bg-elevated) 94%, transparent);
+    backdrop-filter: blur(8px);
 }
 
 .nav-menu-button::-webkit-details-marker { display: none; }
@@ -1784,7 +1789,7 @@ button.nav-icon-link {
 
 @media (max-width: 860px) {
     .nav-links { display: none; }
-    .nav-menu { display: block; }
+    .nav-menu { display: flex; }
 
     .about-grid {
         display: block;
