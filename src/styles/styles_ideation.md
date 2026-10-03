@@ -31,3 +31,8 @@ The bread is catting :3
 New logo is out! I realised that the original Astro favicon icon has thick, defined lines that allows the icon to be visible even from a distance... With that, I layered over everything, still using svg... and after an hour of toil, new logo is up!
 ![alt text](image-3.png)
 
+New themes are out! With many choices abound:
+![alt text](image-5.png)
+
+Including toxic waste... which is your typical h4ck3r terminal theme. But honestly, why would anyone even want this:
+![alt text](image-4.png)
