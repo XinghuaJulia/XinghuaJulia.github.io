@@ -1843,6 +1843,7 @@ button.nav-icon-link {
 
     .nav {
         flex-wrap: nowrap;
+        gap: 0.35rem;
     }
 
     .nav-tools {
@@ -2061,7 +2062,7 @@ button.nav-icon-link {
     }
 
     .nav {
-        gap: 0.45rem;
+        gap: 0.25rem;
     }
 
     .nav-compact-links {
