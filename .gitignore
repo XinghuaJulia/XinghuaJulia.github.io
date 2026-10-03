@@ -14,3 +14,7 @@ node_modules/
 .vscode/
 .idea/
 .DS_Store
+
+# security scan reports
+gitleaks-report*
+gitleaks-results*
