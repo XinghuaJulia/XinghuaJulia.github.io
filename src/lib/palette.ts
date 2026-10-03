@@ -15,6 +15,18 @@
  * that sets the palette before first paint, and the theme switcher, which
  * needs to know what "no choice saved" resolves to.
  */
+export const PALETTE_VALUES = [
+  'ube-neat',
+  'starberry-shortcircuit',
+  'spujcpz',
+  'matcha-munch',
+  'sesame-sweet',
+  'toxic-waste',
+  'burnt-cheese',
+  'blueberry-nice',
+] as const;
+
 export const DEFAULT_PALETTE = {
-  light: 'rose-pine-dawn',
+  light: 'ube-neat',
+  dark: 'sesame-sweet',
 } as const;

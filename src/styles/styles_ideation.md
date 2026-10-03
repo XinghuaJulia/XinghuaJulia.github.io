@@ -6,12 +6,14 @@ The following are some of the ideas I want to achieve:
 Flavour: Pick your flavour of bread. 
 Have flavour as the text, and "select your flavour of noms" arrow that follows the webpage, encouraging users to pick a flavour.
 ![alt text](image-1.png)
-* blueberry nice: white base with purple
+* ube neat: white base with purple. Same as existing Rose Pine Dawn.
 * starberry shortcircuit: light pink base and brown.
-* spujcpz: off white (almost buttery colour) base, brown. Basically a notebook theme
-* matcha munch: off white (light green) base with matcha green
-* sesame sweet: replaces your typical dark theme. Grey base.
+* spujcpz: off white (almost buttery colour) base, brown. Basically a notebook theme.
+* matcha munch: off white (light green) base with matcha green. Same as existing Everforst Light.
+* sesame sweet: replaces your typical dark theme. Grey base. 
 * toxic waste: black and green, like h4ck3r terminal.
+* burnt cheese: Same as existing Ayu Dark.
+* blueberry nice: white base with blue. Same as existing Light Owl.
 
 
 
