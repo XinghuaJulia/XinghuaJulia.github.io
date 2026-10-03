@@ -1,0 +1,317 @@
+<section class="dino-game" data-dino-game aria-labelledby="dino-game-title">
+  <div class="dino-game-heading">
+    <div>
+      <p class="dino-game-kicker">You have scrolled too far... Don't bin the cat.</p>
+    </div>
+    <p class="dino-game-score" aria-live="polite">
+      <span>Score <strong data-score>00000</strong></span>
+      <span>Best <strong data-best>00000</strong></span>
+    </p>
+  </div>
+
+  <div class="dino-game-stage">
+    <canvas
+      data-game-canvas
+      width="900"
+      height="240"
+      tabindex="0"
+      aria-label="Endless runner game. Press Space to start and jump over obstacles."
+    ></canvas>
+    <div class="dino-game-message" data-game-message>
+      <strong>Press Space to play</strong>
+      <span>Jump over the obstacles.</span>
+    </div>
+  </div>
+
+  <p class="dino-game-note">Spacebar, click, or tap to jump.</p>
+</section>
+
+<script>
+  const GAME_WIDTH = 900;
+  const GAME_HEIGHT = 240;
+  const GROUND_Y = 194;
+  const RUN_SPEED = 330;
+  const GRAVITY = 1900;
+  const JUMP_VELOCITY = -700;
+
+  type GameState = 'idle' | 'running' | 'over';
+  type Obstacle = { x: number; width: number; height: number };
+
+  function initialiseGame(root: HTMLElement) {
+    if (root.dataset.initialised === 'true') return;
+    root.dataset.initialised = 'true';
+
+    const canvas = root.querySelector<HTMLCanvasElement>('[data-game-canvas]')!;
+    const message = root.querySelector<HTMLElement>('[data-game-message]')!;
+    const scoreOutput = root.querySelector<HTMLElement>('[data-score]')!;
+    const bestOutput = root.querySelector<HTMLElement>('[data-best]')!;
+    const context = canvas.getContext('2d')!;
+
+    const playerImage = new Image();
+    const obstacleImage = new Image();
+    const cloudImage = new Image();
+    playerImage.src = '/assets/dino-game/player-placeholder.svg';
+    obstacleImage.src = '/assets/dino-game/obstacle-placeholder.svg';
+    cloudImage.src = '/assets/dino-game/cloud-placeholder.svg';
+
+    const player = { x: 82, y: GROUND_Y - 52, width: 52, height: 52, velocityY: 0 };
+    let obstacles: Obstacle[] = [];
+    let state: GameState = 'idle';
+    let score = 0;
+    let best = Number(sessionStorage.getItem('bread-run-best') || 0);
+    let spawnIn = 1.25;
+    let lastTime = performance.now();
+    let frame = 0;
+    let groundOffset = 0;
+
+    const formatScore = (value: number) => Math.floor(value).toString().padStart(5, '0');
+    bestOutput.textContent = formatScore(best);
+
+    function palette(name: string, fallback: string) {
+      return getComputedStyle(root).getPropertyValue(name).trim() || fallback;
+    }
+
+    function reset() {
+      obstacles = [];
+      score = 0;
+      spawnIn = 1.25;
+      groundOffset = 0;
+      player.y = GROUND_Y - player.height;
+      player.velocityY = 0;
+      scoreOutput.textContent = formatScore(0);
+    }
+
+    function start() {
+      reset();
+      state = 'running';
+      message.hidden = true;
+      jump();
+    }
+
+    function jump() {
+      const onGround = player.y >= GROUND_Y - player.height - 0.5;
+      if (state === 'idle' || state === 'over') {
+        start();
+      } else if (onGround) {
+        player.velocityY = JUMP_VELOCITY;
+      }
+    }
+
+    function endGame() {
+      state = 'over';
+      best = Math.max(best, Math.floor(score));
+      sessionStorage.setItem('bread-run-best', String(best));
+      bestOutput.textContent = formatScore(best);
+      message.innerHTML = '<strong>Bonk!</strong><span>Press Space to try again.</span>';
+      message.hidden = false;
+    }
+
+    function overlaps(obstacle: Obstacle) {
+      const padding = 8;
+      return player.x + padding < obstacle.x + obstacle.width - padding &&
+        player.x + player.width - padding > obstacle.x + padding &&
+        player.y + padding < GROUND_Y &&
+        player.y + player.height - padding > GROUND_Y - obstacle.height + padding;
+    }
+
+    function update(delta: number) {
+      if (state !== 'running') return;
+
+      score += delta * 10;
+      scoreOutput.textContent = formatScore(score);
+      groundOffset = (groundOffset + RUN_SPEED * delta) % 34;
+
+      player.velocityY += GRAVITY * delta;
+      player.y = Math.min(GROUND_Y - player.height, player.y + player.velocityY * delta);
+      if (player.y >= GROUND_Y - player.height) player.velocityY = 0;
+
+      spawnIn -= delta;
+      if (spawnIn <= 0) {
+        const height = 42 + Math.random() * 18;
+        obstacles.push({ x: GAME_WIDTH + 20, width: height * 0.72, height });
+        spawnIn = 1.35 + Math.random() * 0.85;
+      }
+
+      obstacles.forEach((obstacle) => { obstacle.x -= RUN_SPEED * delta; });
+      obstacles = obstacles.filter((obstacle) => obstacle.x + obstacle.width > -10);
+      if (obstacles.some(overlaps)) endGame();
+    }
+
+    function drawImageOrBox(image: HTMLImageElement, x: number, y: number, width: number, height: number, colour: string) {
+      if (image.complete && image.naturalWidth) context.drawImage(image, x, y, width, height);
+      else {
+        context.fillStyle = colour;
+        context.fillRect(x, y, width, height);
+      }
+    }
+
+    function draw() {
+      const background = palette('--bg-elevated', '#f5f3ee');
+      const ink = palette('--ink', '#222');
+      const muted = palette('--muted-2', '#888');
+      const accent = palette('--accent', '#8064a2');
+      context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+      context.fillStyle = background;
+      context.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+      context.globalAlpha = 0.62;
+      drawImageOrBox(cloudImage, 620, 34, 96, 40, muted);
+      drawImageOrBox(cloudImage, 250, 62, 68, 29, muted);
+      context.globalAlpha = 1;
+
+      context.strokeStyle = ink;
+      context.lineWidth = 3;
+      context.beginPath();
+      context.moveTo(0, GROUND_Y + 1);
+      context.lineTo(GAME_WIDTH, GROUND_Y + 1);
+      context.stroke();
+
+      context.fillStyle = muted;
+      for (let x = -groundOffset; x < GAME_WIDTH; x += 34) context.fillRect(x, GROUND_Y + 12, 15, 2);
+
+      drawImageOrBox(playerImage, player.x, player.y, player.width, player.height, accent);
+      obstacles.forEach((obstacle) => {
+        drawImageOrBox(obstacleImage, obstacle.x, GROUND_Y - obstacle.height, obstacle.width, obstacle.height, accent);
+      });
+    }
+
+    function loop(now: number) {
+      const delta = Math.min((now - lastTime) / 1000, 0.033);
+      lastTime = now;
+      update(delta);
+      draw();
+      frame = requestAnimationFrame(loop);
+    }
+
+    function activate(event?: Event) {
+      event?.preventDefault();
+      jump();
+      canvas.focus({ preventScroll: true });
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.code !== 'Space' || event.repeat) return;
+      const target = event.target as HTMLElement | null;
+      if (target?.matches('input, textarea, select')) return;
+      activate(event);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    canvas.addEventListener('pointerdown', activate);
+    frame = requestAnimationFrame(loop);
+
+    document.addEventListener('astro:before-preparation', () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('keydown', onKeyDown);
+    }, { once: true });
+  }
+
+  function initialiseGames() {
+    document.querySelectorAll<HTMLElement>('[data-dino-game]').forEach(initialiseGame);
+  }
+
+  initialiseGames();
+  document.addEventListener('astro:page-load', initialiseGames);
+</script>
+
+<style>
+  .dino-game {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 5rem) 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .dino-game-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .dino-game-kicker {
+    margin: 0 0 0.2rem;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .dino-game h2 {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: clamp(1.45rem, 4vw, 2.3rem);
+  }
+
+  .dino-game-score {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+
+  .dino-game-score strong { color: var(--ink); }
+
+  .dino-game-stage {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elevated);
+    box-shadow: 0 12px 35px color-mix(in srgb, var(--ink) 9%, transparent);
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 15 / 4;
+    touch-action: manipulation;
+  }
+
+  canvas:focus,
+  canvas:focus-visible {
+    outline: none;
+  }
+
+  .dino-game-message {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    gap: 0.3rem;
+    padding: 1rem;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .dino-game-message[hidden] { display: none; }
+
+  .dino-game-message strong {
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: clamp(1rem, 3vw, 1.35rem);
+  }
+
+  .dino-game-message span {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .dino-game-note {
+    margin: 0.7rem 0 0;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 640px), (pointer: coarse) {
+    .dino-game-heading { align-items: start; }
+    .dino-game-score { flex-direction: column; gap: 0.1rem; text-align: right; }
+    .dino-game-message span { display: none; }
+  }
+</style>
