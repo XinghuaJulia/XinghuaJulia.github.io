@@ -9,7 +9,6 @@ tags:
 draft: false
 ---
 
-Bikeable cities should be paired with pretty chimes.
 
 ## Picking out the announcements
 
