@@ -47,10 +47,13 @@
     const bestOutput = root.querySelector<HTMLElement>('[data-best]')!;
     const context = canvas.getContext('2d')!;
 
-    const playerImage = new Image();
+    const playerRunImages = [new Image(), new Image()];
+    const playerDeadImage = new Image();
     const obstacleImage = new Image();
     const cloudImage = new Image();
-    playerImage.src = '/assets/dino-game/player-placeholder.svg';
+    playerRunImages[0].src = '/assets/dino-game/player-run-1-placeholder.svg';
+    playerRunImages[1].src = '/assets/dino-game/player-run-2-placeholder.svg';
+    playerDeadImage.src = '/assets/dino-game/player-dead-placeholder.svg';
     obstacleImage.src = '/assets/dino-game/obstacle-placeholder.svg';
     cloudImage.src = '/assets/dino-game/cloud-placeholder.svg';
 
@@ -63,6 +66,7 @@
     let lastTime = performance.now();
     let frame = 0;
     let groundOffset = 0;
+    let runAnimationTime = 0;
 
     const formatScore = (value: number) => Math.floor(value).toString().padStart(5, '0');
     bestOutput.textContent = formatScore(best);
@@ -76,6 +80,7 @@
       score = 0;
       spawnIn = 1.25;
       groundOffset = 0;
+      runAnimationTime = 0;
       player.y = GROUND_Y - player.height;
       player.velocityY = 0;
       scoreOutput.textContent = formatScore(0);
@@ -120,6 +125,7 @@
       score += delta * 10;
       scoreOutput.textContent = formatScore(score);
       groundOffset = (groundOffset + RUN_SPEED * delta) % 34;
+      runAnimationTime += delta;
 
       player.velocityY += GRAVITY * delta;
       player.y = Math.min(GROUND_Y - player.height, player.y + player.velocityY * delta);
@@ -169,6 +175,13 @@
       context.fillStyle = muted;
       for (let x = -groundOffset; x < GAME_WIDTH; x += 34) context.fillRect(x, GROUND_Y + 12, 15, 2);
 
+      const onGround = player.y >= GROUND_Y - player.height - 0.5;
+      const runFrame = Math.floor(runAnimationTime / 0.12) % playerRunImages.length;
+      const playerImage = state === 'over'
+        ? playerDeadImage
+        : state === 'running' && onGround
+          ? playerRunImages[runFrame]
+          : playerRunImages[0];
       drawImageOrBox(playerImage, player.x, player.y, player.width, player.height, accent);
       obstacles.forEach((obstacle) => {
         drawImageOrBox(obstacleImage, obstacle.x, GROUND_Y - obstacle.height, obstacle.width, obstacle.height, accent);
