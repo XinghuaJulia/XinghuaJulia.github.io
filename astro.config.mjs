@@ -38,14 +38,17 @@ function pagefindDev() {
 
 export default defineConfig({
   site: 'https://meowbreadmeow.com',
+
   // v7 default ('jsx') strips spaces between inline elements, which corrupts
   // Pagefind's text extraction of adjacent spans (e.g. job titles + dates).
   compressHTML: true,
+
   markdown: {
     // Emit --astro-code-* variables instead of fixed hex colors, so code
     // blocks follow the active palette (defined in src/styles/style.css).
     shikiConfig: { theme: 'css-variables' },
   },
+
   integrations: [
     // /feeshy is intentionally discoverable through robots.txt, not sitemap.
     sitemap({ filter: (page) => !page.endsWith('/feeshy/') }),
