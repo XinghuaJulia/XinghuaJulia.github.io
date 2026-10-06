@@ -261,9 +261,10 @@ const currentPath = Astro.url.pathname;
         };
 
         const run = async () => {
-          const styles = getComputedStyle(header);
-          const canopyDrop = Number.parseFloat(styles.getPropertyValue('--canopy-drop')) || 22;
-          const restingHeight = Math.ceil(header.getBoundingClientRect().height + canopyDrop);
+          // Both canopies draw their scallops below their own box. Match the
+          // header box itself here; adding --canopy-drop would count the
+          // scalloped edge twice and cause a visible jump at handoff.
+          const restingHeight = header.getBoundingClientRect().height;
 
           try {
             await intro.animate(
