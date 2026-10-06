@@ -521,7 +521,7 @@ code, pre, kbd, samp {
     z-index: 2;
     left: 50%;
     top: auto;
-    bottom: calc((var(--canopy-drop) + 0.75rem) * -1);
+    bottom: calc(0rem - var(--canopy-drop) - 0.75rem);
     width: clamp(5.5rem, 10vw, 7.5rem);
     /* A fixed-length arm moves with the canopy instead of being compressed. */
     height: 120svh;
@@ -540,6 +540,13 @@ code, pre, kbd, samp {
     filter: drop-shadow(0 0.55rem 0.5rem color-mix(in srgb, #000 22%, transparent));
 }
 
+/* Match the apparent mobile grip position on wider screens. */
+@media (min-width: 701px) {
+    .canopy-intro-paw {
+        bottom: calc(3rem - var(--canopy-drop));
+    }
+}
+
 .canopy-intro-pending .canopy-intro {
     display: block;
 }
@@ -550,7 +557,11 @@ code, pre, kbd, samp {
 
 .canopy-intro-pending .site-header--home .nav,
 .canopy-intro-nav-ready .site-header--home .nav {
-    transition: opacity 420ms ease;
+    transition: opacity 1350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.canopy-intro-nav-ready .site-header--home {
+    z-index: 101;
 }
 
 .canopy-intro-nav-ready .site-header--home .nav {

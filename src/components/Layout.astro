@@ -265,36 +265,47 @@ const currentPath = Astro.url.pathname;
           // header box itself here; adding --canopy-drop would count the
           // scalloped edge twice and cause a visible jump at handoff.
           const restingHeight = header.getBoundingClientRect().height;
+          const headerStyles = getComputedStyle(header);
+          const canopyDrop = Number.parseFloat(headerStyles.getPropertyValue('--canopy-drop')) || 22;
+          const pawExitDistance = restingHeight + canopyDrop + 16;
 
           try {
-            await intro.animate(
+            const canopyDelay = 700;
+            const canopyDuration = 2200;
+            const pawDuration = 920;
+
+            const canopyAnimation = intro.animate(
               [
                 { height: '100svh' },
                 { height: `${restingHeight}px` },
               ],
               {
-                duration: 3500,
-                delay: 700,
+                duration: canopyDuration,
+                delay: canopyDelay,
                 easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
                 fill: 'forwards',
               },
-            ).finished;
+            );
 
-            await paw.animate(
+            await canopyAnimation.finished;
+
+            const pawAnimation = paw.animate(
               [
                 { transform: 'translate(-50%, 0)', opacity: 1 },
-                { transform: 'translate(-50%, -28%)', opacity: 0 },
+                { transform: `translate(-50%, -${pawExitDistance}px)`, opacity: 0 },
               ],
               {
-                duration: 920,
-                easing: 'cubic-bezier(0.55, 0, 0.8, 0.4)',
+                duration: pawDuration,
+                easing: 'linear',
                 fill: 'forwards',
               },
-            ).finished;
+            );
+
+            await pawAnimation.finished;
 
             intro.classList.add('canopy-intro--settled');
             root.classList.add('canopy-intro-nav-ready');
-            await new Promise((resolve) => window.setTimeout(resolve, 960));
+            await new Promise((resolve) => window.setTimeout(resolve, 1450));
           } finally {
             root.classList.remove('canopy-intro-nav-ready');
             finish();
