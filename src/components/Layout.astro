@@ -67,6 +67,19 @@ const currentPath = Astro.url.pathname;
         document.addEventListener('astro:after-swap', apply);
       })();
     </script>
+    <script is:inline define:vars={{ isHome: currentPath === '/' }}>
+      (() => {
+        // This flag belongs to the current browser document. A hard refresh
+        // creates a new window and plays again; Astro client-side navigation
+        // keeps the same window and therefore does not replay the intro.
+        if (window.__canopyDocumentBooted) return;
+        window.__canopyDocumentBooted = true;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (isHome && !reduceMotion) {
+          document.documentElement.classList.add('canopy-intro-pending');
+        }
+      })();
+    </script>
     <ClientRouter />
   </head>
   <body>
@@ -161,6 +174,14 @@ const currentPath = Astro.url.pathname;
       </nav>
     </header>
 
+    {currentPath === '/' && (
+      <div class="canopy-intro" id="canopy-intro" aria-hidden="true">
+        <div class="canopy-intro-paw" id="canopy-intro-paw">
+          <span>🐾</span>
+        </div>
+      </div>
+    )}
+
     <slot />
 
     <footer class="footer">
@@ -211,6 +232,80 @@ const currentPath = Astro.url.pathname;
         </div>
       </div>
     </div>
+
+    <script>
+      let canopyIntroController: AbortController | undefined;
+
+      function initCanopyIntro() {
+        canopyIntroController?.abort();
+        canopyIntroController = new AbortController();
+        const { signal } = canopyIntroController;
+        const root = document.documentElement;
+        const intro = document.getElementById('canopy-intro');
+        const paw = document.getElementById('canopy-intro-paw');
+        const header = document.querySelector<HTMLElement>('.site-header--home');
+
+        if (!intro || !paw || !header || !root.classList.contains('canopy-intro-pending')) {
+          intro?.remove();
+          root.classList.remove('canopy-intro-pending', 'canopy-intro-running');
+          return;
+        }
+
+        root.classList.add('canopy-intro-running');
+        document.body.style.overflow = 'hidden';
+
+        const finish = () => {
+          intro.remove();
+          root.classList.remove('canopy-intro-pending', 'canopy-intro-running');
+          document.body.style.overflow = '';
+        };
+
+        const run = async () => {
+          const styles = getComputedStyle(header);
+          const canopyDrop = Number.parseFloat(styles.getPropertyValue('--canopy-drop')) || 22;
+          const restingHeight = Math.ceil(header.getBoundingClientRect().height + canopyDrop);
+
+          try {
+            await intro.animate(
+              [
+                { height: '100svh' },
+                { height: `${restingHeight}px` },
+              ],
+              {
+                duration: 3500,
+                delay: 700,
+                easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
+                fill: 'forwards',
+              },
+            ).finished;
+
+            await paw.animate(
+              [
+                { transform: 'translate(-50%, 0) rotate(-2deg)', opacity: 1 },
+                { transform: 'translate(-50%, -105%) rotate(3deg)', opacity: 0 },
+              ],
+              {
+                duration: 920,
+                easing: 'cubic-bezier(0.55, 0, 0.8, 0.4)',
+                fill: 'forwards',
+              },
+            ).finished;
+
+            intro.classList.add('canopy-intro--settled');
+            root.classList.add('canopy-intro-nav-ready');
+            await new Promise((resolve) => window.setTimeout(resolve, 960));
+          } finally {
+            root.classList.remove('canopy-intro-nav-ready');
+            finish();
+          }
+        };
+
+        requestAnimationFrame(() => void run());
+        signal.addEventListener('abort', finish, { once: true });
+      }
+
+      document.addEventListener('astro:page-load', initCanopyIntro);
+    </script>
 
     <script>
       let searchController: AbortController | undefined;

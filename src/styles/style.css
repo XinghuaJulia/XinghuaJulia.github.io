@@ -462,6 +462,105 @@ code, pre, kbd, samp {
     margin-bottom: 0;
 }
 
+/* ===== Homepage canopy reveal =====
+   The real homepage is fully rendered beneath this fixed layer. The intro
+   shrinks upward until it exactly covers the resting header, then hands the
+   scene back to the real sticky header after the temporary paw exits. */
+.canopy-intro {
+    --canopy-stripe-width: 3.5rem;
+    --canopy-drop: 1.35rem;
+    --canopy-accent: color-mix(in srgb, var(--accent) 68%, var(--bg));
+    --canopy-base: color-mix(in srgb, var(--bg) 88%, var(--bg-elevated));
+    --canopy-edge: color-mix(in srgb, var(--accent) 42%, var(--line-strong));
+    position: fixed;
+    z-index: 100;
+    inset: 0 0 auto;
+    display: none;
+    height: 100svh;
+    overflow: visible;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--canopy-accent) 0 var(--canopy-stripe-width),
+        var(--canopy-base) var(--canopy-stripe-width) calc(var(--canopy-stripe-width) * 2)
+    );
+    will-change: height;
+}
+
+.canopy-intro::before,
+.canopy-intro::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: var(--canopy-drop);
+    pointer-events: none;
+    -webkit-mask: radial-gradient(ellipse 50% 100% at 50% 0, #000 99%, transparent 100%) 0 0 / var(--canopy-stripe-width) 100% repeat-x;
+    mask: radial-gradient(ellipse 50% 100% at 50% 0, #000 99%, transparent 100%) 0 0 / var(--canopy-stripe-width) 100% repeat-x;
+}
+
+.canopy-intro::before {
+    z-index: 0;
+    top: calc(100% + 1px);
+    background: var(--canopy-edge);
+    filter: drop-shadow(0 0.25rem 0.2rem color-mix(in srgb, var(--ink) 18%, transparent));
+}
+
+.canopy-intro::after {
+    z-index: 1;
+    top: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--canopy-accent) 0 var(--canopy-stripe-width),
+        var(--canopy-base) var(--canopy-stripe-width) calc(var(--canopy-stripe-width) * 2)
+    );
+}
+
+.canopy-intro-paw {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 100%;
+    width: clamp(5.5rem, 10vw, 7.5rem);
+    height: calc(100svh + 4rem);
+    display: grid;
+    place-items: start center;
+    transform: translate(-50%, 0) rotate(-2deg);
+    border: 0.2rem solid color-mix(in srgb, var(--ink) 72%, transparent);
+    border-radius: 44% 44% 3rem 3rem;
+    background: color-mix(in srgb, var(--bg-elevated) 92%, var(--accent));
+    box-shadow: 0 0.55rem 1rem color-mix(in srgb, #000 22%, transparent);
+    color: var(--ink);
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    line-height: 1;
+    will-change: transform, opacity;
+}
+
+.canopy-intro-paw span {
+    margin-top: 0.75rem;
+}
+
+.canopy-intro-pending .canopy-intro {
+    display: block;
+}
+
+.canopy-intro-pending .site-header--home .nav {
+    opacity: 0;
+}
+
+.canopy-intro-pending .site-header--home .nav,
+.canopy-intro-nav-ready .site-header--home .nav {
+    transition: opacity 420ms ease;
+}
+
+.canopy-intro-nav-ready .site-header--home .nav {
+    opacity: 1;
+}
+
+.canopy-intro--settled {
+    opacity: 1;
+}
+
 .nav {
     /* Positioned so .nav-menu-panel can anchor to the whole bar — anchoring
        to the hamburger itself pushes the panel off-screen on narrow
@@ -2078,4 +2177,7 @@ button.nav-icon-link {
     }
 
     .theme-hint::after { display: none; }
+
+    .canopy-intro { display: none !important; }
+    .site-header--home .nav { opacity: 1 !important; }
 }
