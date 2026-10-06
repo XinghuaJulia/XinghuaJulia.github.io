@@ -520,24 +520,24 @@ code, pre, kbd, samp {
     position: absolute;
     z-index: 2;
     left: 50%;
-    top: 100%;
+    top: auto;
+    bottom: calc((var(--canopy-drop) + 0.75rem) * -1);
     width: clamp(5.5rem, 10vw, 7.5rem);
-    height: calc(100svh + 4rem);
-    display: grid;
-    place-items: start center;
-    transform: translate(-50%, 0) rotate(-2deg);
-    border: 0.2rem solid color-mix(in srgb, var(--ink) 72%, transparent);
-    border-radius: 44% 44% 3rem 3rem;
-    background: color-mix(in srgb, var(--bg-elevated) 92%, var(--accent));
-    box-shadow: 0 0.55rem 1rem color-mix(in srgb, #000 22%, transparent);
-    color: var(--ink);
-    font-size: clamp(2.6rem, 6vw, 4.2rem);
-    line-height: 1;
+    /* A fixed-length arm moves with the canopy instead of being compressed. */
+    height: 120svh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transform: translate(-50%, 0);
     will-change: transform, opacity;
 }
 
-.canopy-intro-paw span {
-    margin-top: 0.75rem;
+.canopy-intro-paw img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: fill;
+    filter: drop-shadow(0 0.55rem 0.5rem color-mix(in srgb, #000 22%, transparent));
 }
 
 .canopy-intro-pending .canopy-intro {

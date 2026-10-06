@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder cat arm</title>
+  <desc id="desc">A simple long cream cylinder used as a temporary cat-arm placeholder.</desc>
+  <defs>
+    <linearGradient id="fur" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d4c8dc"/>
+      <stop offset="0.22" stop-color="#eee6eb"/>
+      <stop offset="0.5" stop-color="#fff8ee"/>
+      <stop offset="0.78" stop-color="#eee6eb"/>
+      <stop offset="1" stop-color="#d4c8dc"/>
+    </linearGradient>
+  </defs>
+  <path
+    d="M12 0H108V947C108 976 87 996 60 996C33 996 12 976 12 947Z"
+    fill="url(#fur)"
+    stroke="#504b52"
+    stroke-width="7"
+    vector-effect="non-scaling-stroke"
+  />
+</svg>

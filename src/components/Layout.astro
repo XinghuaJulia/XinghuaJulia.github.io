@@ -177,7 +177,7 @@ const currentPath = Astro.url.pathname;
     {currentPath === '/' && (
       <div class="canopy-intro" id="canopy-intro" aria-hidden="true">
         <div class="canopy-intro-paw" id="canopy-intro-paw">
-          <span>🐾</span>
+          <img src="/assets/cat-arm-placeholder.svg" alt="" />
         </div>
       </div>
     )}
@@ -281,8 +281,8 @@ const currentPath = Astro.url.pathname;
 
             await paw.animate(
               [
-                { transform: 'translate(-50%, 0) rotate(-2deg)', opacity: 1 },
-                { transform: 'translate(-50%, -105%) rotate(3deg)', opacity: 0 },
+                { transform: 'translate(-50%, 0)', opacity: 1 },
+                { transform: 'translate(-50%, -28%)', opacity: 0 },
               ],
               {
                 duration: 920,
